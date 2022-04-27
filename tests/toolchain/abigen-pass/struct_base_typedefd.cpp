@@ -1,12 +1,12 @@
 /*
- * Regression test for https://github.com/EOSIO/eosio.cdt/issues/601.
+ * Regression test for https://github.com/DCD/dcd.cdt/issues/601.
  *
  * Verifies that a struct can inherit from a typedef'd class/struct.
  */
 
-#include <eosio/eosio.hpp>
+#include <dcd/dcd.hpp>
 
-using namespace eosio;
+using namespace dcd;
 
 struct foo {
    int value;
@@ -17,11 +17,11 @@ using bar = foo;
 struct baz : bar {
 };
 
-class [[eosio::contract]] struct_base_typedefd : public contract {
+class [[dcd::contract]] struct_base_typedefd : public contract {
 public:
    using contract::contract;
 
-   [[eosio::action]]
+   [[dcd::action]]
    void hi(baz b) {
       print(b.value);
    }

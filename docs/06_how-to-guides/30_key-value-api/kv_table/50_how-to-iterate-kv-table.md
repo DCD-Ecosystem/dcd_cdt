@@ -10,16 +10,16 @@ This how-to provides instructions to iterate through a `Key-Value Table` (`kv ta
 [[caution | Alpha version]]
 | `Key-Value Table` is designated as `alpha` and should not be used in production code.
 
-Use the `iterator` defined by the `eosio::kv::table::index` class to accomplish this task.
+Use the `iterator` defined by the `dcd::kv::table::index` class to accomplish this task.
 
 ## Before you begin
 
 Make sure you have the following prerequisites in place:
 
-* An EOSIO development environment, for details consult the [Get Started Guide](https://developers.eos.io/welcome/latest/getting-started-guide/index)
+* An DCD development environment, for details consult the [Get Started Guide](https://developers.dcd.io/welcome/latest/getting-started-guide/index)
 * A smart contract named `smrtcontract`
 * A user defined type, `struct` or `class`, which defines the data stored in the map, named `person`
-* A `kv table` data type, `struct` or `class`, which inherits `eosio::kv::table`, and stores objects of type `person`, named `address_table`
+* A `kv table` data type, `struct` or `class`, which inherits `dcd::kv::table`, and stores objects of type `person`, named `address_table`
 * Each `person` object has the following data members:
   * `account_name`,
   * `first_name`,
@@ -33,14 +33,14 @@ Refer to the following reference implementation for your starting point:
 
 ```cpp
 struct person {
-  eosio::name account_name;
+  dcd::name account_name;
   std::string first_name;
   std::string last_name;
   std::string personal_id;
 };
 
-class [[eosio::contract]] smrtcontract : public contract {
-    struct [[eosio::table]] address_table : eosio::kv::table<person, "kvaddrbook"_n> {
+class [[dcd::contract]] smrtcontract : public contract {
+    struct [[dcd::table]] address_table : dcd::kv::table<person, "kvaddrbook"_n> {
 
      index<name> account_name_uidx {
         name{"accname"_n},
@@ -70,8 +70,8 @@ Refer to the following reference implementation to implement an action which ite
 `smartcontract.hpp`
 
 ```cpp
-class [[eosio::contract]] smrtcontract : public contract {
-    struct [[eosio::table]] address_table : eosio::kv::table<person, "kvaddrbook"_n> {
+class [[dcd::contract]] smrtcontract : public contract {
+    struct [[dcd::table]] address_table : dcd::kv::table<person, "kvaddrbook"_n> {
 
      index<name> account_name_uidx {
         name{"accname"_n},
@@ -85,7 +85,7 @@ class [[eosio::contract]] smrtcontract : public contract {
      using contract::contract;
 
      // iterates over the first n persons in the table
-     [[eosio::action]]
+     [[dcd::action]]
      std::vector<person> iterate(int iterations_count
 );
 
@@ -97,7 +97,7 @@ class [[eosio::contract]] smrtcontract : public contract {
 
 ```cpp
 // Iterates over the first iterations_count persons in the table
-[[eosio::action]]
+[[dcd::action]]
 std::vector<person> smrtcontract::iterate(int iterations_count) {
   address_table addresses{"kvaddrbook"_n};
 
@@ -108,7 +108,7 @@ std::vector<person> smrtcontract::iterate(int iterations_count) {
   int current_iteration = 0;
   while (begin_itr != end_itr && current_iteration < iterations_count)
   {
-     eosio::print_f(
+     dcd::print_f(
         "Person found: {%, %}\n",
         begin_itr.value().first_name,
         begin_itr.value().last_name);

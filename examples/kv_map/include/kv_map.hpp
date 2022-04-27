@@ -1,12 +1,12 @@
-#include <eosio/eosio.hpp>
-#include <eosio/map.hpp>
+#include <dcd/dcd.hpp>
+#include <dcd/map.hpp>
 
-using namespace eosio;
+using namespace dcd;
 using namespace std;
 
 // this structure defines the data stored in the kv::map
 struct person {
-   eosio::name account_name;
+   dcd::name account_name;
    std::string first_name;
    std::string last_name;
    std::string street;
@@ -19,7 +19,7 @@ struct person {
 // helper factory to easily build person objects
 struct person_factory {
    static person get_person(
-      eosio::name account_name,
+      dcd::name account_name,
       std::string first_name,
       std::string last_name,
       std::string street,
@@ -40,25 +40,25 @@ struct person_factory {
       }
 };
 
-class [[eosio::contract]] kv_map : public eosio::contract {
+class [[dcd::contract]] kv_map : public dcd::contract {
 
-   using my_map_t = eosio::kv::map<"kvmap"_n, int, person>;
+   using my_map_t = dcd::kv::map<"kvmap"_n, int, person>;
 
    public:
       using contract::contract;
-      kv_map(eosio::name receiver, eosio::name code, eosio::datastream<const char*> ds)
+      kv_map(dcd::name receiver, dcd::name code, dcd::datastream<const char*> ds)
          : contract(receiver, code, ds) {}
 
       // retrieves a person based on map key.
-      [[eosio::action]]
+      [[dcd::action]]
       person get(int id);
 
       // inserts a person if not exists, or updates it if already exists.
       // the payer for the resources consumed is the account that created the kv::map
       // object in the first place, the account that owns this smart contract.
-      [[eosio::action]]
+      [[dcd::action]]
       void upsert(int id,
-         eosio::name account_name,
+         dcd::name account_name,
          std::string first_name,
          std::string last_name,
          std::string street,
@@ -68,14 +68,14 @@ class [[eosio::contract]] kv_map : public eosio::contract {
          std::string personal_id);
 
       // same as upsert only that it takes a user defined type as input parameter
-      [[eosio::action]]
+      [[dcd::action]]
       void upsert2(int id, person pers);
 
       // inserts a person if not exists, or updates it if already exists.
       // the payer is the account_name, specified as input parameter.
-      [[eosio::action]]
+      [[dcd::action]]
       void upsertwpayer(int id,
-         eosio::name account_name,
+         dcd::name account_name,
          std::string first_name,
          std::string last_name,
          std::string street,
@@ -85,31 +85,31 @@ class [[eosio::contract]] kv_map : public eosio::contract {
          std::string personal_id);
 
       // deletes a person based on unique id
-      [[eosio::action]]
+      [[dcd::action]]
       void erase(int id);
 
       // checks if a person exists with a given personal_id and country
-      [[eosio::action]]
+      [[dcd::action]]
       bool checkpidcntr(std::string personal_id, std::string country);
 
       // iterates over the first iterations_count persons in the table using for loop
       // and prints their first and last names
-      [[eosio::action]]
+      [[dcd::action]]
       void fiterate(int iterations_count);
 
       // iterates over the first iterations_count persons in the table using while loop
       // and prints their first and last names
-      [[eosio::action]]
+      [[dcd::action]]
       void witerate(int iterations_count);
 
-      using get_action = eosio::action_wrapper<"get"_n, &kv_map::get>;
-      using upsert_action = eosio::action_wrapper<"upsert"_n, &kv_map::upsert>;
-      using upsert_action2 = eosio::action_wrapper<"upsert2"_n, &kv_map::upsert2>;
-      using upsertwpayer_action = eosio::action_wrapper<"upsertwpayer"_n, &kv_map::upsertwpayer>;
-      using erase_action = eosio::action_wrapper<"erase"_n, &kv_map::erase>;
-      using is_pers_id_in_cntry_action = eosio::action_wrapper<"checkpidcntr"_n, &kv_map::checkpidcntr>;
-      using witerate_action = eosio::action_wrapper<"witerate"_n, &kv_map::witerate>;
-      using fiterate_action = eosio::action_wrapper<"fiterate"_n, &kv_map::fiterate>;
+      using get_action = dcd::action_wrapper<"get"_n, &kv_map::get>;
+      using upsert_action = dcd::action_wrapper<"upsert"_n, &kv_map::upsert>;
+      using upsert_action2 = dcd::action_wrapper<"upsert2"_n, &kv_map::upsert2>;
+      using upsertwpayer_action = dcd::action_wrapper<"upsertwpayer"_n, &kv_map::upsertwpayer>;
+      using erase_action = dcd::action_wrapper<"erase"_n, &kv_map::erase>;
+      using is_pers_id_in_cntry_action = dcd::action_wrapper<"checkpidcntr"_n, &kv_map::checkpidcntr>;
+      using witerate_action = dcd::action_wrapper<"witerate"_n, &kv_map::witerate>;
+      using fiterate_action = dcd::action_wrapper<"fiterate"_n, &kv_map::fiterate>;
 
    private:
       void print_person(const person& person, bool new_line = true);

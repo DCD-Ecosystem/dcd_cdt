@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef EOSIO_NATIVE
+#ifdef DCD_NATIVE
    typedef unsigned long size_t;
    typedef long ptrdiff_t;
 #else

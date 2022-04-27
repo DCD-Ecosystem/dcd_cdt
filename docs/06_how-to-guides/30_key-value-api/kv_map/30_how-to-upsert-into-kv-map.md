@@ -11,7 +11,7 @@ This how-to provides instructions to upsert into `Key-Value Map` (`kv map`). Ups
 
 Make sure you have the following prerequisites in place:
 
-* An EOSIO development environment, for details consult the [Get Started Guide](https://developers.eos.io/welcome/latest/getting-started-guide/index)
+* An DCD development environment, for details consult the [Get Started Guide](https://developers.dcd.io/welcome/latest/getting-started-guide/index)
 * A smart contract named `smrtcontract`
 * A user defined type, `struct` or `class`, which defines the data stored in the map, named `person`
 * A `kv map` object, name `my_map`, which stores objects of type `person`, with unique keys of type `int`
@@ -22,18 +22,18 @@ Refer to the following reference implementation for your starting point:
 
 ```cpp
 struct person {
-  eosio::name account_name;
+  dcd::name account_name;
   std::string first_name;
   std::string last_name;
 };
 
-class [[eosio::contract]] smartcontract : public eosio::contract {
+class [[dcd::contract]] smartcontract : public dcd::contract {
 
-   using my_map_t = eosio::kv::map<"kvmap"_n, int, person>;
+   using my_map_t = dcd::kv::map<"kvmap"_n, int, person>;
 
    public:
       using contract::contract;
-      smartcontract(eosio::name receiver, eosio::name code, eosio::datastream<const char*> ds)
+      smartcontract(dcd::name receiver, dcd::name code, dcd::datastream<const char*> ds)
          : contract(receiver, code, ds) {}
 
    private:
@@ -55,26 +55,26 @@ Refer to the following reference implementation to insert a new `person` object,
 
 ```cpp
 struct person {
-  eosio::name account_name;
+  dcd::name account_name;
   std::string first_name;
   std::string last_name;
 };
 
-class [[eosio::contract]] smartcontract : public eosio::contract {
+class [[dcd::contract]] smartcontract : public dcd::contract {
 
-   using my_map_t = eosio::kv::map<"kvmap"_n, int, person>;
+   using my_map_t = dcd::kv::map<"kvmap"_n, int, person>;
 
    public:
       using contract::contract;
-      smartcontract(eosio::name receiver, eosio::name code, eosio::datastream<const char*> ds)
+      smartcontract(dcd::name receiver, dcd::name code, dcd::datastream<const char*> ds)
          : contract(receiver, code, ds) {}
 
       // inserts a person if not exists, or updates it if already exists.
       // the payer for the resources consumed is the account that created the kv::map
       // object in the first place, the account that owns this smart contract.
-      [[eosio::action]]
+      [[dcd::action]]
       void upsert(int id,
-         eosio::name account_name,
+         dcd::name account_name,
          std::string first_name,
          std::string last_name);
 
@@ -87,10 +87,10 @@ class [[eosio::contract]] smartcontract : public eosio::contract {
 
 ```cpp
 // inserts if not exists, or updates if already exists, a person
-[[eosio::action]]
+[[dcd::action]]
 void smartcontract::upsert(
       int id,
-      eosio::name account_name,
+      dcd::name account_name,
       std::string first_name,
       std::string last_name) {
 

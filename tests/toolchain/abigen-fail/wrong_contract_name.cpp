@@ -1,5 +1,5 @@
-#include <eosio/eosio.hpp>
-using namespace eosio;
+#include <dcd/dcd.hpp>
+using namespace dcd;
 
 CONTRACT hello : public contract {
    public:

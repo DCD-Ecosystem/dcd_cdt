@@ -1,6 +1,6 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in dcd.cdt/LICENSE.txt
  */
 
 #include <array>
@@ -10,12 +10,12 @@
 #include <string>
 #include <vector>
 
-#include <eosio/tester.hpp>
-#include <eosio/binary_extension.hpp>
-#include <eosio/crypto.hpp>
-#include <eosio/datastream.hpp>
-#include <eosio/ignore.hpp>
-#include <eosio/symbol.hpp>
+#include <dcd/tester.hpp>
+#include <dcd/binary_extension.hpp>
+#include <dcd/crypto.hpp>
+#include <dcd/datastream.hpp>
+#include <dcd/ignore.hpp>
+#include <dcd/symbol.hpp>
 
 using std::array;
 using std::begin;
@@ -32,20 +32,20 @@ using std::tuple;
 using std::variant;
 using std::vector;
 
-using eosio::binary_extension;
-using eosio::datastream;
-using eosio::fixed_bytes;
-using eosio::ignore;
-using eosio::ignore_wrapper;
-using eosio::pack;
-using eosio::pack_size;
-using eosio::ecc_public_key;
-using eosio::public_key;
-using eosio::ecc_signature;
-using eosio::signature;
-using eosio::symbol;
-using eosio::symbol_code;
-using eosio::unpack;
+using dcd::binary_extension;
+using dcd::datastream;
+using dcd::fixed_bytes;
+using dcd::ignore;
+using dcd::ignore_wrapper;
+using dcd::pack;
+using dcd::pack_size;
+using dcd::ecc_public_key;
+using dcd::public_key;
+using dcd::ecc_signature;
+using dcd::signature;
+using dcd::symbol;
+using dcd::symbol_code;
+using dcd::unpack;
 
 // This data structure (which cannot be defined within a test macro block) needs both a default and a
 // user-defined constructor for a specific `binary extension` test
@@ -53,11 +53,11 @@ struct be_test {
    be_test() : val{42} {}
    be_test(int i) : val{i} {}
    int val;
-   EOSLIB_SERIALIZE( be_test, (val) )
+   DCDLIB_SERIALIZE( be_test, (val) )
 };
 
-// Definitions in `eosio.cdt/libraries/eosio/datastream.hpp`
-EOSIO_TEST_BEGIN(datastream_test)
+// Definitions in `dcd.cdt/libraries/dcd/datastream.hpp`
+DCD_TEST_BEGIN(datastream_test)
    static constexpr uint16_t buffer_size{256};
    char datastream_buffer[buffer_size]{}; // Buffer for the datastream to point to
    char buffer[buffer_size]; // Buffer to compare `datastream_buffer` with
@@ -141,10 +141,10 @@ EOSIO_TEST_BEGIN(datastream_test)
    CHECK_EQUAL( ds.remaining(), 0 )
    ds.seekp(257);
    CHECK_EQUAL( ds.remaining(), -1)
-EOSIO_TEST_END
+DCD_TEST_END
 
-// Definitions in `eosio.cdt/libraries/eosio/datastream.hpp`
-EOSIO_TEST_BEGIN(datastream_specialization_test)
+// Definitions in `dcd.cdt/libraries/dcd/datastream.hpp`
+DCD_TEST_BEGIN(datastream_specialization_test)
    static constexpr uint16_t buffer_size{256};
    char datastream_buffer[buffer_size]{}; // Buffer for the datastream to point to
    char buffer[buffer_size]; // Buffer to compare `datastream_buffer` with
@@ -213,10 +213,10 @@ EOSIO_TEST_BEGIN(datastream_specialization_test)
 
    ds.seekp(257);
    CHECK_EQUAL( ds.remaining(), 0 )
-EOSIO_TEST_END
+DCD_TEST_END
 
-// Definitions in `eosio.cdt/libraries/eosio/datastream.hpp`
-EOSIO_TEST_BEGIN(datastream_stream_test)
+// Definitions in `dcd.cdt/libraries/dcd/datastream.hpp`
+DCD_TEST_BEGIN(datastream_stream_test)
    static constexpr uint16_t buffer_size{256};
    char datastream_buffer[buffer_size]; // Buffer for the datastream to point to
 
@@ -437,7 +437,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( cchar_vec, char_vec )
 
    // -----------------------
-   // eosio::binary_extension
+   // dcd::binary_extension
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const binary_extension<char> cbe_char{'c'};
@@ -473,7 +473,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( 42, be_default_test.value_or().val )
 
    // ------------------
-   // eosio::fixed_bytes
+   // dcd::fixed_bytes
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const fixed_bytes<32> cfb{fixed_bytes<32>::make_from_word_sequence<uint64_t>(1ULL,2ULL,3ULL,4ULL)};
@@ -484,7 +484,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( cfb, fb )
 
    // -------------
-   // eosio::ignore
+   // dcd::ignore
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const ignore<char> cig{};
@@ -495,7 +495,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( ds.tellp(), 0 )
 
    // ---------------------
-   // eosio::ignore_wrapper
+   // dcd::ignore_wrapper
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const ignore_wrapper<char> cigw{'c'};
@@ -506,7 +506,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( cigw.value, igw )
 
    // -----------------
-   // eosio::public_key
+   // dcd::public_key
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const public_key cpubkey(std::in_place_index<0>,ecc_public_key{'a','b','c','d','e','f','g','h','i'});
@@ -517,7 +517,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( cpubkey, pubkey )
 
    // ----------------
-   // eosio::signature
+   // dcd::signature
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const signature csig(std::in_place_index<0>,ecc_signature{'a','b','c','d','e','f','g','h','i'});
@@ -528,7 +528,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( csig, sig )
 
    // -------------
-   // eosio::symbol
+   // dcd::symbol
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const symbol csym_no_prec{"SYMBOLL", 0};
@@ -547,7 +547,7 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    CHECK_EQUAL( csym_prec, sym )
 
    // ------------------
-   // eosio::symbol_code
+   // dcd::symbol_code
    ds.seekp(0);
    fill(begin(datastream_buffer), end(datastream_buffer), 0);
    static const symbol_code csc{"SYMBOLL"};
@@ -556,10 +556,10 @@ EOSIO_TEST_BEGIN(datastream_stream_test)
    ds.seekp(0);
    ds >> sc;
    CHECK_EQUAL( csc, sc )
-EOSIO_TEST_END
+DCD_TEST_END
 
-// Definitions in `eosio.cdt/libraries/eosio/datastream.hpp`
-EOSIO_TEST_BEGIN(misc_datastream_test)
+// Definitions in `dcd.cdt/libraries/dcd/datastream.hpp`
+DCD_TEST_BEGIN(misc_datastream_test)
    // ---------------------------
    // vector<char> pack(const T&)
    static const string pack_str{"abcdefghi"};
@@ -592,7 +592,7 @@ EOSIO_TEST_BEGIN(misc_datastream_test)
       unpack_ch = unpack<char>(unpack_source_buffer+i, 9);
       CHECK_EQUAL( unpack_source_buffer[i], unpack_ch )
    }
-EOSIO_TEST_END
+DCD_TEST_END
 
 int main(int argc, char* argv[]) {
    bool verbose = false;
@@ -601,9 +601,9 @@ int main(int argc, char* argv[]) {
    }
    silence_output(!verbose);
 
-   EOSIO_TEST(datastream_test);
-   EOSIO_TEST(datastream_specialization_test);
-   EOSIO_TEST(datastream_stream_test);
-   EOSIO_TEST(misc_datastream_test);
+   DCD_TEST(datastream_test);
+   DCD_TEST(datastream_specialization_test);
+   DCD_TEST(datastream_stream_test);
+   DCD_TEST(misc_datastream_test);
    return has_failed();
 }

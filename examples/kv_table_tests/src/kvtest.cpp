@@ -1,18 +1,18 @@
-#include <eosio/eosio.hpp>
-#include <eosio/asset.hpp>
-#include <eosio/table.hpp>
+#include <dcd/dcd.hpp>
+#include <dcd/asset.hpp>
+#include <dcd/table.hpp>
 
-extern "C" __attribute__((eosio_wasm_import)) void set_kv_parameters_packed(const void* params, uint32_t size);
+extern "C" __attribute__((dcd_wasm_import)) void set_kv_parameters_packed(const void* params, uint32_t size);
 
-using namespace eosio;
+using namespace dcd;
 
 struct kvtest_record {
     std::string id;
     std::string data;
 };
 
-class [[eosio::contract]] kvtest : public contract {
-    struct [[eosio::table]] kvtest_table : eosio::kv::table<kvtest_record, "eosio"_n> {
+class [[dcd::contract]] kvtest : public contract {
+    struct [[dcd::table]] kvtest_table : dcd::kv::table<kvtest_record, "dcd"_n> {
         KV_NAMED_INDEX("by.id", id);
         kvtest_table(name contract) { init(contract, id); }
     };
@@ -20,7 +20,7 @@ class [[eosio::contract]] kvtest : public contract {
     public:
         using contract::contract;
 
-        kvtest(eosio::name receiver, eosio::name code, eosio::datastream<const char *> ds) :
+        kvtest(dcd::name receiver, dcd::name code, dcd::datastream<const char *> ds) :
 	        contract(receiver, code, ds)
         {
             uint32_t limits[4];
@@ -31,10 +31,10 @@ class [[eosio::contract]] kvtest : public contract {
             set_kv_parameters_packed(limits, sizeof(limits));
         }
 
-        [[eosio::action]]
+        [[dcd::action]]
         void smalltest() {
             require_auth(_self);
-            kvtest_table table{"eosio"_n};
+            kvtest_table table{"dcd"_n};
 
             uint64_t id = 1;
             std::string data = "test";
@@ -47,16 +47,16 @@ class [[eosio::contract]] kvtest : public contract {
                 auto itr = table. id.find(std::to_string(id));
                 if (itr != table.id.end()) {
                     std::string val = itr.value().data;
-                    eosio::check(val.compare(data + std::to_string(id)) == 0, "The value for the key " + std::to_string(id) + " is " + val);
+                    dcd::check(val.compare(data + std::to_string(id)) == 0, "The value for the key " + std::to_string(id) + " is " + val);
         	}
             }
         }
 
-        [[eosio::action]]
+        [[dcd::action]]
         void largetest() {
             require_auth(_self);
 
-            kvtest_table table{"eosio"_n};
+            kvtest_table table{"dcd"_n};
             
             std::string data = std::string(8 * 1024 * 1024, 't');
 
@@ -69,7 +69,7 @@ class [[eosio::contract]] kvtest : public contract {
                 if (itr != table.id.end()) {
                     std::string val = itr.value().data.substr(0, 10);
                     std::string expected = (std::to_string(id) + data).substr(0, 10);
-                    eosio::check(val.compare(expected) == 0, "The value for the key " + std::to_string(id) + " is " + val + "...");
+                    dcd::check(val.compare(expected) == 0, "The value for the key " + std::to_string(id) + " is " + val + "...");
                 }
             }
         }

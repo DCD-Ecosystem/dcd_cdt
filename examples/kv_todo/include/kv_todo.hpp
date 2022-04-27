@@ -1,24 +1,24 @@
-#include <eosio/eosio.hpp>
-#include <eosio/system.hpp>
-#include <eosio/table.hpp>
-using namespace eosio;
+#include <dcd/dcd.hpp>
+#include <dcd/system.hpp>
+#include <dcd/table.hpp>
+using namespace dcd;
 
 struct todo_entry {
   std::string uuid;
-  std::tuple<eosio::name, std::string> account_name;
+  std::tuple<dcd::name, std::string> account_name;
   std::tuple<std::string, std::string> task;
   std::tuple<bool, std::string> checked;
   std::tuple<uint32_t, std::string> created;
 
   std::string get_uuid() const { return uuid; }
-  eosio::name get_account_name() const { return std::get<0>(account_name); }
+  dcd::name get_account_name() const { return std::get<0>(account_name); }
   std::string get_task() const { return std::get<0>(task); }
   bool get_checked() const { return std::get<0>(checked); }
   int get_created() const { return std::get<0>(created); }
 };
 
-class [[eosio::contract]] kv_todo : public contract {
-  struct [[eosio::table]] todo_table : eosio::kv::table<todo_entry, "todo"_n> {
+class [[dcd::contract]] kv_todo : public contract {
+  struct [[dcd::table]] todo_table : dcd::kv::table<todo_entry, "todo"_n> {
     KV_NAMED_INDEX("uuid"_n, uuid);
     KV_NAMED_INDEX("accname"_n, account_name);
     KV_NAMED_INDEX("task"_n, task)
@@ -26,36 +26,36 @@ class [[eosio::contract]] kv_todo : public contract {
     KV_NAMED_INDEX("created"_n, created)
 
     // constructor for our `kvtodo` table to setup and initialize it
-    todo_table(eosio::name contract_name) { init(contract_name, uuid, account_name, task, checked, created); }
+    todo_table(dcd::name contract_name) { init(contract_name, uuid, account_name, task, checked, created); }
   };
   public:
       using contract::contract;
 
-      [[eosio::action]]
+      [[dcd::action]]
       std::vector<todo_entry> getbyaccname(name account_name);
 
-      [[eosio::action]]
+      [[dcd::action]]
       size_t cntbyaccname(name account_name);
 
-      [[eosio::action]]
+      [[dcd::action]]
       std::vector<todo_entry> getbytask(std::string task);
 
-      [[eosio::action]]
+      [[dcd::action]]
       size_t cntbytask(std::string name);
 
-      [[eosio::action]]
+      [[dcd::action]]
       std::vector<todo_entry> getbychecked(bool value);
 
-      [[eosio::action]]
+      [[dcd::action]]
       size_t cntbychecked(bool checked);
 
-      [[eosio::action]]
+      [[dcd::action]]
       todo_entry upsert(const std::string& uuid,
-                        eosio::name account_name,
+                        dcd::name account_name,
                         const std::string& task,
                         bool checked);
 
-      [[eosio::action]]
+      [[dcd::action]]
       void del(const std::string& uuid);
 
       using get_by_account_name_action = action_wrapper<"getbyaccname"_n, &kv_todo::getbyaccname>;

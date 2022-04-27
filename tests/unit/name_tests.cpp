@@ -1,23 +1,23 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in dcd.cdt/LICENSE.txt
  */
 
 #include <limits>
 #include <string>
 
-#include <eosio/eosio.hpp>
-#include <eosio/tester.hpp>
+#include <dcd/dcd.hpp>
+#include <dcd/tester.hpp>
 
 using std::numeric_limits;
 using std::string;
 
-using eosio::name;
+using dcd::name;
 
 constexpr uint64_t u64max = numeric_limits<uint64_t>::max(); // 18446744073709551615ULL
 
-// Definitions in `eosio.cdt/libraries/eosio/name.hpp`
-EOSIO_TEST_BEGIN(name_type_test_ctr_num)
+// Definitions in `dcd.cdt/libraries/dcd/name.hpp`
+DCD_TEST_BEGIN(name_type_test_ctr_num)
    //// constexpr name()
    CHECK_EQUAL( name{}.value, 0ULL )
 
@@ -33,9 +33,9 @@ EOSIO_TEST_BEGIN(name_type_test_ctr_num)
    // test that constexpr constructor is evaluated at compile time
    static_assert( name{0ULL}.value == 0ULL );   
    static_assert( name{name::raw{1ULL}}.value == 1ULL );
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(name_type_test_ctr_str_lit)
+DCD_TEST_BEGIN(name_type_test_ctr_str_lit)
    //// constexpr explicit name(string_view)
    // Note:
    // These are the exact `uint64_t` value representations of the given string
@@ -66,19 +66,19 @@ EOSIO_TEST_BEGIN(name_type_test_ctr_str_lit)
 
    // test that constexpr constructor is evaluated at compile time
    static_assert( name{"1"}.value == 576460752303423488ULL );
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(name_type_test_str_not_allowed)
+DCD_TEST_BEGIN(name_type_test_str_not_allowed)
    CHECK_ASSERT( "character is not in allowed character set for names", ([]() {name{"-1"};}) )
    CHECK_ASSERT( "character is not in allowed character set for names", ([]() {name{"0"};}) )
    CHECK_ASSERT( "character is not in allowed character set for names", ([]() {name{"6"};}) )
    CHECK_ASSERT( "thirteenth character in name cannot be a letter that comes after j", ([]() {name{"111111111111k"};}) )
    CHECK_ASSERT( "thirteenth character in name cannot be a letter that comes after j", ([]() {name{"zzzzzzzzzzzzk"};}) )
    CHECK_ASSERT( "string is too long to be a valid name", ([]() {name{"12345abcdefghj"};}) )
-EOSIO_TEST_END
+DCD_TEST_END
 
 
-EOSIO_TEST_BEGIN(name_type_test_char_to_value)
+DCD_TEST_BEGIN(name_type_test_char_to_value)
    // --------------------------------------------
    // static constexpr uint8_t char_to_value(char)
    char c{'.'};
@@ -95,9 +95,9 @@ EOSIO_TEST_BEGIN(name_type_test_char_to_value)
       CHECK_EQUAL( name::char_to_value(c), expected_value )
       ++expected_value;
    }
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(name_type_test_allowed_chars)
+DCD_TEST_BEGIN(name_type_test_allowed_chars)
    CHECK_ASSERT( "character is not in allowed character set for names", ([]() {name::char_to_value(char{'-'});}) )
    CHECK_ASSERT( "character is not in allowed character set for names", ([]() {name::char_to_value(char{'/'});}) )
    CHECK_ASSERT( "character is not in allowed character set for names", ([]() {name::char_to_value(char{'6'});}) )
@@ -105,81 +105,81 @@ EOSIO_TEST_BEGIN(name_type_test_allowed_chars)
    CHECK_ASSERT( "character is not in allowed character set for names", ([]() {name::char_to_value(char{'Z'});}) )
    CHECK_ASSERT( "character is not in allowed character set for names", ([]() {name::char_to_value(char{'`'});}) )
    CHECK_ASSERT( "character is not in allowed character set for names", ([]() {name::char_to_value(char{'{'});}) );
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(name_type_test_str_len)
+DCD_TEST_BEGIN(name_type_test_str_len)
    // -------------------------------
    // constexpr uint8_t length()cosnt
    CHECK_EQUAL( name{""}.length(), 0 )
    CHECK_EQUAL( name{"e"}.length(), 1 )
    CHECK_EQUAL( name{"eo"}.length(), 2 )
-   CHECK_EQUAL( name{"eos"}.length(), 3 )
-   CHECK_EQUAL( name{"eosi"}.length(), 4 )
-   CHECK_EQUAL( name{"eosio"}.length(), 5 )
-   CHECK_EQUAL( name{"eosioa"}.length(), 6 )
-   CHECK_EQUAL( name{"eosioac"}.length(), 7 )
-   CHECK_EQUAL( name{"eosioacc"}.length(), 8 )
-   CHECK_EQUAL( name{"eosioacco"}.length(), 9 )
-   CHECK_EQUAL( name{"eosioaccou"}.length(), 10 )
-   CHECK_EQUAL( name{"eosioaccoun"}.length(), 11 )
-   CHECK_EQUAL( name{"eosioaccount"}.length(), 12 )
-   CHECK_EQUAL( name{"eosioaccountj"}.length(), 13 )
-EOSIO_TEST_END
+   CHECK_EQUAL( name{"dcd"}.length(), 3 )
+   CHECK_EQUAL( name{"dcdi"}.length(), 4 )
+   CHECK_EQUAL( name{"dcd"}.length(), 5 )
+   CHECK_EQUAL( name{"dcda"}.length(), 6 )
+   CHECK_EQUAL( name{"dcdac"}.length(), 7 )
+   CHECK_EQUAL( name{"dcdacc"}.length(), 8 )
+   CHECK_EQUAL( name{"dcdacco"}.length(), 9 )
+   CHECK_EQUAL( name{"dcdaccou"}.length(), 10 )
+   CHECK_EQUAL( name{"dcdaccoun"}.length(), 11 )
+   CHECK_EQUAL( name{"dcdaccount"}.length(), 12 )
+   CHECK_EQUAL( name{"dcdaccountj"}.length(), 13 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(name_type_test_str_too_long)
+DCD_TEST_BEGIN(name_type_test_str_too_long)
    CHECK_ASSERT( "string is too long to be a valid name", ([]() {name{"12345abcdefghj"}.length();}) )
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(name_type_test_suffix)
+DCD_TEST_BEGIN(name_type_test_suffix)
    // ----------------------------
    // constexpr name suffix()const
-   CHECK_EQUAL( name{".eosioaccounj"}.suffix(), name{"eosioaccounj"} )
+   CHECK_EQUAL( name{".dcdaccounj"}.suffix(), name{"dcdaccounj"} )
    CHECK_EQUAL( name{"e.osioaccounj"}.suffix(), name{"osioaccounj"} )
    CHECK_EQUAL( name{"eo.sioaccounj"}.suffix(), name{"sioaccounj"} )
-   CHECK_EQUAL( name{"eos.ioaccounj"}.suffix(), name{"ioaccounj"} )
-   CHECK_EQUAL( name{"eosi.oaccounj"}.suffix(), name{"oaccounj"} )
-   CHECK_EQUAL( name{"eosio.accounj"}.suffix(), name{"accounj"} )
-   CHECK_EQUAL( name{"eosioa.ccounj"}.suffix(), name{"ccounj"} )
-   CHECK_EQUAL( name{"eosioac.counj"}.suffix(), name{"counj"} )
-   CHECK_EQUAL( name{"eosioacc.ounj"}.suffix(), name{"ounj"} )
-   CHECK_EQUAL( name{"eosioacco.unj"}.suffix(), name{"unj"} )
-   CHECK_EQUAL( name{"eosioaccou.nj"}.suffix(), name{"nj"} )
-   CHECK_EQUAL( name{"eosioaccoun.j"}.suffix(), name{"j"} )
+   CHECK_EQUAL( name{"dcd.ioaccounj"}.suffix(), name{"ioaccounj"} )
+   CHECK_EQUAL( name{"dcdi.oaccounj"}.suffix(), name{"oaccounj"} )
+   CHECK_EQUAL( name{"dcd.accounj"}.suffix(), name{"accounj"} )
+   CHECK_EQUAL( name{"dcda.ccounj"}.suffix(), name{"ccounj"} )
+   CHECK_EQUAL( name{"dcdac.counj"}.suffix(), name{"counj"} )
+   CHECK_EQUAL( name{"dcdacc.ounj"}.suffix(), name{"ounj"} )
+   CHECK_EQUAL( name{"dcdacco.unj"}.suffix(), name{"unj"} )
+   CHECK_EQUAL( name{"dcdaccou.nj"}.suffix(), name{"nj"} )
+   CHECK_EQUAL( name{"dcdaccoun.j"}.suffix(), name{"j"} )
 
    CHECK_EQUAL( name{"e.o.s.i.o.a.c"}.suffix(), name{"c"} )
-   CHECK_EQUAL( name{"eos.ioa.cco"}.suffix(), name{"cco"} )
-EOSIO_TEST_END
+   CHECK_EQUAL( name{"dcd.ioa.cco"}.suffix(), name{"cco"} )
+DCD_TEST_END
 
 
-EOSIO_TEST_BEGIN(name_type_test_prefix)
+DCD_TEST_BEGIN(name_type_test_prefix)
    // ----------------------------
    // constexpr name prefix()const
 
-   CHECK_EQUAL( name{".eosioaccounj"}.prefix(), name{} )
+   CHECK_EQUAL( name{".dcdaccounj"}.prefix(), name{} )
    CHECK_EQUAL( name{"e.osioaccounj"}.prefix(), name{"e"} )
    CHECK_EQUAL( name{"eo.sioaccounj"}.prefix(), name{"eo"} )
-   CHECK_EQUAL( name{"eos.ioaccounj"}.prefix(), name{"eos"} )
-   CHECK_EQUAL( name{"eosi.oaccounj"}.prefix(), name{"eosi"} )
-   CHECK_EQUAL( name{"eosio.accounj"}.prefix(), name{"eosio"} )
-   CHECK_EQUAL( name{"eosioa.ccounj"}.prefix(), name{"eosioa"} )
-   CHECK_EQUAL( name{"eosioac.counj"}.prefix(), name{"eosioac"} )
-   CHECK_EQUAL( name{"eosioacc.ounj"}.prefix(), name{"eosioacc"} )
-   CHECK_EQUAL( name{"eosioacco.unj"}.prefix(), name{"eosioacco"} )
-   CHECK_EQUAL( name{"eosioaccou.nj"}.prefix(), name{"eosioaccou"} )
-   CHECK_EQUAL( name{"eosioaccoun.j"}.prefix(), name{"eosioaccoun"} )
-   CHECK_EQUAL( name{"eosioaccounj."}.prefix(), name{"eosioaccounj"} )
-   CHECK_EQUAL( name{"eosioaccountj"}.prefix(), name{"eosioaccountj"} )
+   CHECK_EQUAL( name{"dcd.ioaccounj"}.prefix(), name{"dcd"} )
+   CHECK_EQUAL( name{"dcdi.oaccounj"}.prefix(), name{"dcdi"} )
+   CHECK_EQUAL( name{"dcd.accounj"}.prefix(), name{"dcd"} )
+   CHECK_EQUAL( name{"dcda.ccounj"}.prefix(), name{"dcda"} )
+   CHECK_EQUAL( name{"dcdac.counj"}.prefix(), name{"dcdac"} )
+   CHECK_EQUAL( name{"dcdacc.ounj"}.prefix(), name{"dcdacc"} )
+   CHECK_EQUAL( name{"dcdacco.unj"}.prefix(), name{"dcdacco"} )
+   CHECK_EQUAL( name{"dcdaccou.nj"}.prefix(), name{"dcdaccou"} )
+   CHECK_EQUAL( name{"dcdaccoun.j"}.prefix(), name{"dcdaccoun"} )
+   CHECK_EQUAL( name{"dcdaccounj."}.prefix(), name{"dcdaccounj"} )
+   CHECK_EQUAL( name{"dcdaccountj"}.prefix(), name{"dcdaccountj"} )
 
    CHECK_EQUAL( name{"e.o.s.i.o.a.c"}.prefix(), name{"e.o.s.i.o.a"} )
-   CHECK_EQUAL( name{"eos.ioa.cco"}.prefix(), name{"eos.ioa"} )
+   CHECK_EQUAL( name{"dcd.ioa.cco"}.prefix(), name{"dcd.ioa"} )
 
    CHECK_EQUAL( name{"a.my.account"}.prefix(), name{"a.my"} )
    CHECK_EQUAL( name{"a.my.account"}.prefix().prefix(), name{"a"} )
 
    static_assert( name{"e.osioaccounj"}.prefix() == name{"e"} );
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(name_type_test_raw)
+DCD_TEST_BEGIN(name_type_test_raw)
    // -----------------------------
    // constexpr operator raw()const
    CHECK_EQUAL( name{"1"}.operator name::raw(), static_cast<name::raw>(576460752303423488ULL) )
@@ -207,10 +207,10 @@ EOSIO_TEST_BEGIN(name_type_test_raw)
    CHECK_EQUAL( name{"555555555555j"}.operator name::raw(), static_cast<name::raw>(2975281302211218015ULL) )
    CHECK_EQUAL( name{"aaaaaaaaaaaaj"}.operator name::raw(), static_cast<name::raw>(3570337562653461615ULL) )
    CHECK_EQUAL( name{"zzzzzzzzzzzzj"}.operator name::raw(), static_cast<name::raw>(u64max) )
-EOSIO_TEST_END
+DCD_TEST_END
 
 
-EOSIO_TEST_BEGIN(name_type_test_op_bool)
+DCD_TEST_BEGIN(name_type_test_op_bool)
    // ---------------------------------------
    // constexpr explicit operator bool()const
    // Note that I must be explicit about calling the operator because it is defined as `explicit`
@@ -225,9 +225,9 @@ EOSIO_TEST_BEGIN(name_type_test_op_bool)
    CHECK_EQUAL( !name{"1"}.operator bool(), false )
 
    static_assert( name{0}.operator bool() == false );
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(name_type_test_memcmp)
+DCD_TEST_BEGIN(name_type_test_memcmp)
    // ----------------------------------------
    // char* write_as_string(char*, char*)const
    constexpr uint8_t buffer_size{32};
@@ -283,9 +283,9 @@ EOSIO_TEST_BEGIN(name_type_test_memcmp)
    CHECK_EQUAL( memcmp(str.c_str(), buffer, strlen(str.c_str())), 0 )
    name{str = "zzzzzzzzzzzzj"}.write_as_string( buffer, buffer + sizeof(buffer) );
    CHECK_EQUAL( memcmp(str.c_str(), buffer, strlen(str.c_str())), 0 )
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(name_type_test_to_str)
+DCD_TEST_BEGIN(name_type_test_to_str)
    // -----------------------
    // string to_string()const
    CHECK_EQUAL( name{"1"}.to_string(), "1" )
@@ -313,10 +313,10 @@ EOSIO_TEST_BEGIN(name_type_test_to_str)
    CHECK_EQUAL( name{"555555555555j"}.to_string(), "555555555555j" )
    CHECK_EQUAL( name{"aaaaaaaaaaaaj"}.to_string(), "aaaaaaaaaaaaj" )
    CHECK_EQUAL( name{"zzzzzzzzzzzzj"}.to_string(), "zzzzzzzzzzzzj" )
-EOSIO_TEST_END
+DCD_TEST_END
 
 
-EOSIO_TEST_BEGIN(name_type_test_equal)
+DCD_TEST_BEGIN(name_type_test_equal)
    // ----------------------------------------------------------
    // friend constexpr bool operator==(const name&, const name&)
    CHECK_EQUAL( name{"1"} == name{"1"}, true )
@@ -347,9 +347,9 @@ EOSIO_TEST_BEGIN(name_type_test_equal)
 
    // test constexpr
    static_assert( name{"1"} == name{"1"} ); 
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(name_type_test_not_equal)
+DCD_TEST_BEGIN(name_type_test_not_equal)
    // -----------------------------------------------------------
    // friend constexpr bool operator!=(const name&, const name&)
    CHECK_EQUAL( name{"1"} != name{}, true )
@@ -380,9 +380,9 @@ EOSIO_TEST_BEGIN(name_type_test_not_equal)
 
    // test constexpr
    static_assert( name{"1"} != name{"2"} ); 
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(name_type_test_less_than)
+DCD_TEST_BEGIN(name_type_test_less_than)
    // ---------------------------------------------------------
    // friend constexpr bool operator<(const name&, const name&)
    CHECK_EQUAL( name{} < name{"1"}, true )
@@ -413,10 +413,10 @@ EOSIO_TEST_BEGIN(name_type_test_less_than)
 
    // test constexpr
    static_assert( name{} < name{"1"} ); 
-EOSIO_TEST_END
+DCD_TEST_END
 
 
-EOSIO_TEST_BEGIN(name_type_test_op_n)
+DCD_TEST_BEGIN(name_type_test_op_n)
    // ------------------------------------
    // inline constexpr name operator""_n()
    CHECK_EQUAL( name{}, ""_n )
@@ -449,7 +449,7 @@ EOSIO_TEST_BEGIN(name_type_test_op_n)
 
    // test constexpr
    static_assert( name{"1"} == "1"_n ); 
-EOSIO_TEST_END
+DCD_TEST_END
 
 int main(int argc, char* argv[]) {
    bool verbose = false;
@@ -458,22 +458,22 @@ int main(int argc, char* argv[]) {
    }
    silence_output(!verbose);
 
-   EOSIO_TEST(name_type_test_ctr_num)
-   EOSIO_TEST(name_type_test_ctr_str_lit)
-   EOSIO_TEST(name_type_test_str_not_allowed)
-   EOSIO_TEST(name_type_test_char_to_value)
-   EOSIO_TEST(name_type_test_allowed_chars)
-   EOSIO_TEST(name_type_test_str_len)
-   EOSIO_TEST(name_type_test_suffix)
-   EOSIO_TEST(name_type_test_prefix)
-   EOSIO_TEST(name_type_test_raw)
-   EOSIO_TEST(name_type_test_op_bool)
-   EOSIO_TEST(name_type_test_memcmp)
-   EOSIO_TEST(name_type_test_to_str)
-   EOSIO_TEST(name_type_test_equal)
-   EOSIO_TEST(name_type_test_not_equal)
-   EOSIO_TEST(name_type_test_less_than)
-   EOSIO_TEST(name_type_test_op_n)
+   DCD_TEST(name_type_test_ctr_num)
+   DCD_TEST(name_type_test_ctr_str_lit)
+   DCD_TEST(name_type_test_str_not_allowed)
+   DCD_TEST(name_type_test_char_to_value)
+   DCD_TEST(name_type_test_allowed_chars)
+   DCD_TEST(name_type_test_str_len)
+   DCD_TEST(name_type_test_suffix)
+   DCD_TEST(name_type_test_prefix)
+   DCD_TEST(name_type_test_raw)
+   DCD_TEST(name_type_test_op_bool)
+   DCD_TEST(name_type_test_memcmp)
+   DCD_TEST(name_type_test_to_str)
+   DCD_TEST(name_type_test_equal)
+   DCD_TEST(name_type_test_not_equal)
+   DCD_TEST(name_type_test_less_than)
+   DCD_TEST(name_type_test_op_n)
 
    return has_failed();
 }

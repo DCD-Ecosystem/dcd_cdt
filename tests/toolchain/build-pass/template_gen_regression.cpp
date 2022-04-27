@@ -1,7 +1,7 @@
-#include <eosio/eosio.hpp>
-#include <eosio/crypto.hpp>
+#include <dcd/dcd.hpp>
+#include <dcd/crypto.hpp>
 
-using namespace eosio;
+using namespace dcd;
 
 template <typename T, typename U>
 struct baz {
@@ -46,7 +46,7 @@ struct foo {
 };
 
 
-CONTRACT template_gen_regression : public eosio::contract {
+CONTRACT template_gen_regression : public dcd::contract {
    public:
       using contract::contract;
 

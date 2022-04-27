@@ -1,4 +1,4 @@
-#include <eosio/action.h>
+#include <dcd/action.h>
 #include <stddef.h>
 
 void test_action( void ) {

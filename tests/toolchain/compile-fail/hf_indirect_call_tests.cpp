@@ -1,17 +1,17 @@
-#include <eosio/eosio.hpp>
-#include <eosio/table.hpp>
-#include <eosio/contract.hpp>
-#include <eosio/action.hpp>
-#include <eosio/crypto.hpp>
-#include <eosio/fixed_bytes.hpp>
-#include <eosio/privileged.hpp>
-#include <eosio/producer_schedule.hpp>
+#include <dcd/dcd.hpp>
+#include <dcd/table.hpp>
+#include <dcd/contract.hpp>
+#include <dcd/action.hpp>
+#include <dcd/crypto.hpp>
+#include <dcd/fixed_bytes.hpp>
+#include <dcd/privileged.hpp>
+#include <dcd/producer_schedule.hpp>
 
-#include <eosio/asset.hpp>
-#include <eosio/binary_extension.hpp>
-#include <eosio/singleton.hpp>
-#include <eosio/system.hpp>
-#include <eosio/time.hpp>
+#include <dcd/asset.hpp>
+#include <dcd/binary_extension.hpp>
+#include <dcd/singleton.hpp>
+#include <dcd/system.hpp>
+#include <dcd/time.hpp>
 /* 
  tests which create aliases and indirect calls for host functions.
  at least one host function called within a C++ lambda.  It can be a trivial lambda which simply calls the host function and nothing else.
@@ -22,10 +22,10 @@
  And finally, combine all four in a chain of aliases
 */
 
-extern "C" __attribute__((eosio_wasm_import)) void set_resource_limit(int64_t, int64_t, int64_t);
-extern "C" __attribute__((eosio_wasm_import)) void foo_bar(int64_t, int64_t, int64_t);
+extern "C" __attribute__((dcd_wasm_import)) void set_resource_limit(int64_t, int64_t, int64_t);
+extern "C" __attribute__((dcd_wasm_import)) void foo_bar(int64_t, int64_t, int64_t);
 
-#define ACTION_TYPE  [[eosio::action, eosio::read_only]]
+#define ACTION_TYPE  [[dcd::action, dcd::read_only]]
 
 using func = void (*)(int64_t, int64_t, int64_t);
 
@@ -34,7 +34,7 @@ func srl_g2 = set_resource_limit;
 func srl_g3;
 func fb_g = foo_bar;
 
-class [[eosio::contract]] hf_indirect_call_tests : public eosio::contract {
+class [[dcd::contract]] hf_indirect_call_tests : public dcd::contract {
 public:
    using contract::contract;
    func srl_m1 = set_resource_limit;

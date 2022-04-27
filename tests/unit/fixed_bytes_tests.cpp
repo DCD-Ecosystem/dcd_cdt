@@ -1,19 +1,19 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in dcd.cdt/LICENSE.txt
  */
 
 #include <array>
 
-#include <eosio/tester.hpp>
-#include <eosio/fixed_bytes.hpp>
+#include <dcd/tester.hpp>
+#include <dcd/fixed_bytes.hpp>
 
 using std::array;
 
-using eosio::fixed_bytes;
+using dcd::fixed_bytes;
 
-// Definitions in `eosio.cdt/libraries/eosio/fixed_bytes.hpp`
-EOSIO_TEST_BEGIN(fixed_bytes_test)
+// Definitions in `dcd.cdt/libraries/dcd/fixed_bytes.hpp`
+DCD_TEST_BEGIN(fixed_bytes_test)
    //// constexpr fixed_bytes()
    // static constexpr size_t padded_bytes()
    CHECK_EQUAL( fixed_bytes<20>{}.padded_bytes(), 12 )
@@ -173,7 +173,7 @@ EOSIO_TEST_BEGIN(fixed_bytes_test)
    // friend bool operator>= <>(const fixed_bytes<Size>, const fixed_bytes<Size>)
    CHECK_EQUAL( fb_cmp1 >= fb_cmp1, true  )
    CHECK_EQUAL( fb_cmp1 >= fb_cmp2, false )
-EOSIO_TEST_END
+DCD_TEST_END
 
 int main(int argc, char* argv[]) {
    bool verbose = false;
@@ -182,6 +182,6 @@ int main(int argc, char* argv[]) {
    }
    silence_output(!verbose);
 
-   EOSIO_TEST(fixed_bytes_test);
+   DCD_TEST(fixed_bytes_test);
    return has_failed();
 }

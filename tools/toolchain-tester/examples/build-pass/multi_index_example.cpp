@@ -1,5 +1,5 @@
-#include <eosio/eosio.hpp>
-using namespace eosio;
+#include <dcd/dcd.hpp>
+using namespace dcd;
 
 CONTRACT multi_index_example : public contract {
    public:
@@ -20,7 +20,7 @@ CONTRACT multi_index_example : public contract {
          uint64_t by_secondary()const { return secondary.value; }
       };
 
-      typedef eosio::multi_index<"testtaba"_n, test_table, eosio::indexed_by<"secid"_n, eosio::const_mem_fun<test_table, uint64_t, &test_table::by_secondary>>> test_tables;
+      typedef dcd::multi_index<"testtaba"_n, test_table, dcd::indexed_by<"secid"_n, dcd::const_mem_fun<test_table, uint64_t, &test_table::by_secondary>>> test_tables;
 
       using set_action = action_wrapper<"set"_n, &multi_index_example::set>;
       using print_action = action_wrapper<"print"_n, &multi_index_example::print>;
@@ -43,7 +43,7 @@ ACTION multi_index_example::set( name user ) {
 ACTION multi_index_example::print( name user ) {
    auto itr = testtab.find(user.value);
    check( itr != testtab.end(), "test table not set" );
-   eosio::print_f("Test Table : {%, %, %}\n", itr->test_primary, itr->secondary, itr->datum);
+   dcd::print_f("Test Table : {%, %, %}\n", itr->test_primary, itr->secondary, itr->datum);
 }
 
 ACTION multi_index_example::bysec( name secid ) {

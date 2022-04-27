@@ -1,8 +1,8 @@
-#include <eosio/eosio.hpp>
+#include <dcd/dcd.hpp>
 
-class [[eosio::contract]] separate_cpp_hpp : eosio::contract {
+class [[dcd::contract]] separate_cpp_hpp : dcd::contract {
 public:
    using contract::contract;
 
-   [[eosio::action]] void act();
+   [[dcd::action]] void act();
 };

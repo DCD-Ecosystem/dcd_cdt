@@ -10,7 +10,7 @@ This guide provides instructions to insert data into a multi-index table.
 
 See the following code reference:
 
-* The [`multi-index`](../../classeosio_1_1multi__index) class.
+* The [`multi-index`](../../classdcd_1_1multi__index) class.
 * The [`multi-index::find(...)`](../../group__multiindex#function-find) method.
 * The [`multi-index::emplace(...)`](../../group__multiindex/#function-emplace) method.
 
@@ -18,8 +18,8 @@ See the following code reference:
 
 Make sure you have the following prerequisites in place:
 
-* An EOSIO development environment, for details consult the [Get Started Guide](https://developers.eos.io/welcome/latest/getting-started-guide/index),
-* A multi-index `testab` table instance which stores `user` objects indexed by the primary key which is of type `eosio::name`. Consult the section [How to instantiate a multi-index table](./how-to-instantiate-a-multi-index-table.md) to learn how to set it up.
+* An DCD development environment, for details consult the [Get Started Guide](https://developers.dcd.io/welcome/latest/getting-started-guide/index),
+* A multi-index `testab` table instance which stores `user` objects indexed by the primary key which is of type `dcd::name`. Consult the section [How to instantiate a multi-index table](./how-to-instantiate-a-multi-index-table.md) to learn how to set it up.
 
 ## Procedure
 
@@ -30,7 +30,7 @@ Complete the following steps to insert an user object in the `testtab` multi-ind
 Use of the multi-index table iterator to find out if the user object already exists. The targeted user is searched based on its account name.
 
 ```cpp
-[[eosio::action]] void multi_index_example::set( name user ) {
+[[dcd::action]] void multi_index_example::set( name user ) {
   // check if the user already exists
   auto itr = testtab.find(user.value);
 }
@@ -41,7 +41,7 @@ Use of the multi-index table iterator to find out if the user object already exi
 Use the [`emplace`](../../group__multiindex/#function-emplace) method to make the insertion if the user object is not already in the multi-index table. Otherwise print an informational message.
 
 ```diff
-[[eosio::action]] void multi_index_example::set( name user ) {
+[[dcd::action]] void multi_index_example::set( name user ) {
   // check if the user already exists
   auto itr = testtab.find(user.value);
 
@@ -59,7 +59,7 @@ Use the [`emplace`](../../group__multiindex/#function-emplace) method to make th
 ```
 
 [[info | Full example location]]
-| A full example project demonstrating the instantiation and usage of multi-index table can be found [here](https://github.com/EOSIO/eosio.cdt/tree/master/examples/multi_index_example).
+| A full example project demonstrating the instantiation and usage of multi-index table can be found [here](https://github.com/DCD/dcd.cdt/tree/master/examples/multi_index_example).
 
 ## Summary
 

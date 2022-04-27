@@ -1,7 +1,7 @@
 #pragma once
-#include <eosio/testing/tester.hpp>
+#include <dcd/testing/tester.hpp>
 
-namespace eosio::testing {
+namespace dcd::testing {
    struct contracts {
       static std::vector<uint8_t> malloc_tests_wasm() { return read_wasm("${CMAKE_BINARY_DIR}/../unit/test_contracts/malloc_tests.wasm"); }
       static std::vector<char>    malloc_tests_abi() { return read_abi("${CMAKE_BINARY_DIR}/../unit/test_contracts/malloc_tests.abi"); }
@@ -36,4 +36,4 @@ namespace eosio::testing {
       static std::vector<uint8_t> action_results_test_wasm() { return read_wasm("${CMAKE_BINARY_DIR}/../unit/test_contracts/action_results_test.wasm"); }
       static std::vector<char>    action_results_test_abi() { return read_abi("${CMAKE_BINARY_DIR}/../unit/test_contracts/action_results_test.abi"); }
    };
-} //ns eosio::testing
+} //ns dcd::testing

@@ -1,19 +1,19 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in dcd.cdt/LICENSE.txt
  */
 
-#include <eosio/tester.hpp>
-#include <eosio/binary_extension.hpp>
-#include <eosio/print.hpp>
+#include <dcd/tester.hpp>
+#include <dcd/binary_extension.hpp>
+#include <dcd/print.hpp>
 
 using std::in_place;
 using std::move;
 
-using eosio::binary_extension;
+using dcd::binary_extension;
 
-// Definitions in `eosio.cdt/libraries/eosio/binary_extension.hpp`
-EOSIO_TEST_BEGIN(binary_extension_test)
+// Definitions in `dcd.cdt/libraries/dcd/binary_extension.hpp`
+DCD_TEST_BEGIN(binary_extension_test)
    //// constexpr binary_extension()
    // constexpr bool has_value()const
    CHECK_EQUAL( (binary_extension<const char>{}.has_value()), false )
@@ -221,9 +221,9 @@ EOSIO_TEST_BEGIN(binary_extension_test)
    be_str_reset.reset();
    CHECK_EQUAL( be_str_reset.has_value(), false )
 
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(binary_extension_assignment_test)
+DCD_TEST_BEGIN(binary_extension_assignment_test)
    // Regression for PR #792
    {
       binary_extension<char> be('a');
@@ -254,7 +254,7 @@ EOSIO_TEST_BEGIN(binary_extension_assignment_test)
       CHECK_EQUAL(be3.value(), be_move_assign.value());
    }
 
-EOSIO_TEST_END
+DCD_TEST_END
 
 int main(int argc, char* argv[]) {
    bool verbose = false;
@@ -263,7 +263,7 @@ int main(int argc, char* argv[]) {
    }
    silence_output(!verbose);
 
-   EOSIO_TEST(binary_extension_test);
-   EOSIO_TEST(binary_extension_assignment_test);
+   DCD_TEST(binary_extension_test);
+   DCD_TEST(binary_extension_assignment_test);
    return has_failed();
 }

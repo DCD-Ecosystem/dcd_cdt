@@ -10,12 +10,12 @@ This guide provides instructions how to compile a smart contract using the comma
 
 See the following code reference:
 
-* The [`eosio-cpp`](https://developers.eos.io/manuals/eosio.cdt/v1.8/command-reference/eosio-cpp) tool.
+* The [`dcd-cpp`](https://developers.dcd.io/manuals/dcd.cdt/v1.8/command-reference/dcd-cpp) tool.
 
 ## Before you begin
 
 * You have the source of the contract saved in a local folder, e.g. `./examples/hello/`
-For details on how to create your first contract follow the [Hello World Contract](https://developers.eos.io/welcome/latest/smart-contract-guides/hello-world) guide.
+For details on how to create your first contract follow the [Hello World Contract](https://developers.dcd.io/welcome/latest/smart-contract-guides/hello-world) guide.
 
 ## Procedure
 
@@ -28,15 +28,15 @@ Follow the following steps to compile your contract.
     ```sh
     mkdir build
     cd build
-    eosio-cpp -abigen ../src/hello.cpp -o hello.wasm -I ../include/
+    dcd-cpp -abigen ../src/hello.cpp -o hello.wasm -I ../include/
     ```
 
     Where:
-    - `eosio-cpp` = Is the [`eosio-cpp`](https://developers.eos.io/manuals/eosio.cdt/v1.8/command-reference/eosio-cpp) tool.
-    - `-abigen` = It instructs the `eosio-cpp` tool to generate ABI file.
+    - `dcd-cpp` = Is the [`dcd-cpp`](https://developers.dcd.io/manuals/dcd.cdt/v1.8/command-reference/dcd-cpp) tool.
+    - `-abigen` = It instructs the `dcd-cpp` tool to generate ABI file.
     - `../src/hello.cpp` = Is the input cpp source file to be compiled.
-    - `-o hello.wasm` = It instructs the `eosio-cpp` tool who to name the output wasm file.
-    - `-I ../include/` = It tells `eosio-cpp` tool what the include folder path is, in this particular case it is a relative path.
+    - `-o hello.wasm` = It instructs the `dcd-cpp` tool who to name the output wasm file.
+    - `-I ../include/` = It tells `dcd-cpp` tool what the include folder path is, in this particular case it is a relative path.
 
 3. Verify the following two files were generated:
 

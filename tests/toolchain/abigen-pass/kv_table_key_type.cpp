@@ -1,12 +1,12 @@
-#include <eosio/eosio.hpp>
-#include <eosio/table.hpp>
+#include <dcd/dcd.hpp>
+#include <dcd/table.hpp>
 
-class [[eosio::contract]] kv_table_key_type : public eosio::contract {
+class [[dcd::contract]] kv_table_key_type : public dcd::contract {
 public:
    using contract::contract;
 
    struct my_struct {
-      eosio::name primary_key;
+      dcd::name primary_key;
       std::string foo;
       uint64_t bar;
 
@@ -30,29 +30,29 @@ public:
       }
    };
 
-   struct [[eosio::table]] my_table : eosio::kv::table<my_struct, "testtable"_n> {
-      index<eosio::name> primary_key {
-         eosio::name{"primarykey"_n},
+   struct [[dcd::table]] my_table : dcd::kv::table<my_struct, "testtable"_n> {
+      index<dcd::name> primary_key {
+         dcd::name{"primarykey"_n},
          &my_struct::primary_key };
 
       index<std::string> foo {
-         eosio::name{"foo"_n},
+         dcd::name{"foo"_n},
          &my_struct::foo };
 
-      index<uint64_t> bar{eosio::name{"bar"_n}, &value_type::bar};
+      index<uint64_t> bar{dcd::name{"bar"_n}, &value_type::bar};
 
       index<std::tuple<std::string, uint32_t>> non_unique_name {
-          eosio::name{"nonunique"_n},
+          dcd::name{"nonunique"_n},
           &my_struct::non_unique_name };
 
       KV_NAMED_INDEX("age"_n, age)
 
-      my_table(eosio::name contract_name) {
+      my_table(dcd::name contract_name) {
          init(contract_name, primary_key, foo, bar, non_unique_name, age);
       }
    };
 
-   [[eosio::action]]
+   [[dcd::action]]
    void noop() {}
 
 };

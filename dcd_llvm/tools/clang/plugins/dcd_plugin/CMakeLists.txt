@@ -1,0 +1,1 @@
+add_llvm_loadable_module(dcd_plugin dcd_autogen.cpp PLUGIN_TOOL clang)

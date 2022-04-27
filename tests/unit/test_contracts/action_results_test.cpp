@@ -1,17 +1,17 @@
-#include <eosio/eosio.hpp>
+#include <dcd/dcd.hpp>
 
-using namespace eosio;
+using namespace dcd;
 
-class [[eosio::contract]] action_results_test : public contract {
+class [[dcd::contract]] action_results_test : public contract {
    public:
    using contract::contract;
 
-   [[eosio::action]]
+   [[dcd::action]]
    void action1() {}
 
-   [[eosio::action]]
+   [[dcd::action]]
    uint32_t action2() { return 42; }
 
-   [[eosio::action]]
+   [[dcd::action]]
    std::string action3() { return "foo"; }
 };

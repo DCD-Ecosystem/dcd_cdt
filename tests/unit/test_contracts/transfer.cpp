@@ -1,7 +1,7 @@
-#include <eosio/eosio.hpp>
-#include <eosio/asset.hpp>
+#include <dcd/dcd.hpp>
+#include <dcd/asset.hpp>
 
-using namespace eosio;
+using namespace dcd;
 
 CONTRACT transfer_contract : public contract {
    public:

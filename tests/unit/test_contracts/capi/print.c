@@ -1,4 +1,4 @@
-#include <eosio/print.h>
+#include <dcd/print.h>
 #include <stddef.h>
 
 void test_print( void ) {

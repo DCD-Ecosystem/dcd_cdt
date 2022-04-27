@@ -25,7 +25,7 @@ endif()
 
 file(GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/musl/include/*.h"
                   "${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal/*.h"
-                  "${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/eos/*.h")
+                  "${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/dcd/*.h")
 
 add_library(c
             ${CRYPT_SOURCES}
@@ -54,7 +54,7 @@ target_include_directories(c
                            ${CMAKE_CURRENT_SOURCE_DIR}/musl/include
                            ${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal
                            ${CMAKE_CURRENT_SOURCE_DIR}/musl/src/crypt
-                           ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/eos
+                           ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/dcd
                            ${CMAKE_SOURCE_DIR})
 
 add_custom_command( TARGET c POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:c> ${BASE_BINARY_DIR}/lib )
@@ -86,7 +86,7 @@ if (ENABLE_NATIVE_COMPILER)
                               ${CMAKE_CURRENT_SOURCE_DIR}/musl/include
                               ${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal
                               ${CMAKE_CURRENT_SOURCE_DIR}/musl/src/crypt
-                              ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/eos
+                              ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/dcd
                               ${CMAKE_SOURCE_DIR})
 
 
@@ -95,4 +95,4 @@ endif()
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/musl/include/ DESTINATION ${BASE_BINARY_DIR}/include/libc/)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/musl/src/internal/ DESTINATION ${BASE_BINARY_DIR}/include/libc/)
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/eos/ DESTINATION ${BASE_BINARY_DIR}/include/libc/)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/musl/arch/dcd/ DESTINATION ${BASE_BINARY_DIR}/include/libc/)

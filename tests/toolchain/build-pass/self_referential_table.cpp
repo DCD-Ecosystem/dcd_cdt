@@ -1,11 +1,11 @@
 /*
- * Regression test for https://github.com/EOSIO/eosio.cdt/issues/527.
+ * Regression test for https://github.com/DCD/dcd.cdt/issues/527.
  *
  * Verifies that a table can reference its own type.
  */
 
-#include <eosio/eosio.hpp>
-using namespace eosio;
+#include <dcd/dcd.hpp>
+using namespace dcd;
 
 CONTRACT self_referential_table : public contract {
    public:
@@ -30,7 +30,7 @@ CONTRACT self_referential_table : public contract {
 
       };
 
-      typedef eosio::multi_index< "testtabs"_n, testtab > testtabs;
+      typedef dcd::multi_index< "testtabs"_n, testtab > testtabs;
 
 };
 ACTION self_referential_table::hi( name nm ) {
