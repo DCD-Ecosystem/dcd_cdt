@@ -1,15 +1,15 @@
-#include <eosio/eosio.hpp>
-using namespace eosio;
+#include <dcd/dcd.hpp>
+using namespace dcd;
 
-class [[eosio::contract]] hello : public contract {
+class [[dcd::contract]] hello : public contract {
    public:
       using contract::contract;
 
-      [[eosio::action]] 
+      [[dcd::action]] 
       void hi( name nm );
-      [[eosio::action]] 
+      [[dcd::action]] 
       void check( name nm );
-      [[eosio::action]]
+      [[dcd::action]]
       std::pair<int, std::string> checkwithrv( name nm );
 
       using hi_action = action_wrapper<"hi"_n, &hello::hi>;

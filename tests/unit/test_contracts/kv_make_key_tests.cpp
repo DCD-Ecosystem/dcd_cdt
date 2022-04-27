@@ -1,5 +1,5 @@
-#include <eosio/eosio.hpp>
-#include <eosio/table.hpp>
+#include <dcd/dcd.hpp>
+#include <dcd/table.hpp>
 
 struct testing_struct {
    uint16_t a;
@@ -12,7 +12,7 @@ struct testing_struct {
 };
 
 struct my_struct {
-   eosio::name tname;
+   dcd::name tname;
    std::string tstring;
    uint64_t tui64;
    int32_t ti32;
@@ -35,7 +35,7 @@ struct my_struct {
    }
 };
 
-struct my_table : eosio::kv::table<my_struct, "testtable"_n> {
+struct my_table : dcd::kv::table<my_struct, "testtable"_n> {
    KV_NAMED_INDEX("t1"_n, tname)
    KV_NAMED_INDEX("t2"_n, tstring)
    KV_NAMED_INDEX("t3"_n, tui64)
@@ -46,12 +46,12 @@ struct my_table : eosio::kv::table<my_struct, "testtable"_n> {
    KV_NAMED_INDEX("t13"_n, tstruct)
    KV_NAMED_INDEX("t14"_n, ttuple)
 
-   my_table(eosio::name contract_name) {
+   my_table(dcd::name contract_name) {
       init(contract_name, tname, tstring, tui64, ti32, tui128, tfloat, tdouble, tstruct, ttuple);
    }
 };
 
-class [[eosio::contract]] kv_make_key_tests : public eosio::contract {
+class [[dcd::contract]] kv_make_key_tests : public dcd::contract {
 public:
    using contract::contract;
 
@@ -61,11 +61,11 @@ public:
       auto itr = idx.begin();
 
       for (const auto& expect : expected) {
-         eosio::check(itr != end_itr, "Should not be the end");
-         eosio::check(itr.value() == expect, "Got the wrong value");
+         dcd::check(itr != end_itr, "Should not be the end");
+         dcd::check(itr.value() == expect, "Got the wrong value");
          ++itr;
       }
-      eosio::check(itr == end_itr, "Should be the end");
+      dcd::check(itr == end_itr, "Should be the end");
    }
 
    my_struct s1{
@@ -124,7 +124,7 @@ public:
       .ttuple = { 101, 34.43, "abc"}
    };
 
-   [[eosio::action]]
+   [[dcd::action]]
    void setup() {
       my_table t{"kvtest"_n};
 
@@ -135,55 +135,55 @@ public:
       t.put(s5, get_self());
    }
 
-   [[eosio::action]]
+   [[dcd::action]]
    void makekeyname() {
       my_table t{"kvtest"_n};
       check_index(t.tname, {s2, s5, s1, s4, s3});
    }
 
-   [[eosio::action]]
+   [[dcd::action]]
    void makekeystr() {
       my_table t{"kvtest"_n};
       check_index(t.tstring, {s2, s5, s1, s3, s4});
    }
 
-   [[eosio::action]]
+   [[dcd::action]]
    void makekeyuill() {
       my_table t{"kvtest"_n};
       check_index(t.tui64, {s5, s4, s3, s2, s1});
    }
 
-   [[eosio::action]]
+   [[dcd::action]]
    void makekeyil() {
       my_table t{"kvtest"_n};
       check_index(t.ti32, {s3, s2, s1, s4, s5});
    }
 
-   [[eosio::action]]
+   [[dcd::action]]
    void makekeyuilll() {
       my_table t{"kvtest"_n};
       check_index(t.tui128, {s2, s1, s5, s4, s3});
    }
 
-   [[eosio::action]]
+   [[dcd::action]]
    void makekeyflt() {
       my_table t{"kvtest"_n};
       check_index(t.tfloat, {s5, s4, s1, s2, s3});
    }
 
-   [[eosio::action]]
+   [[dcd::action]]
    void makekeydbl() {
       my_table t{"kvtest"_n};
       check_index(t.tdouble, {s5, s4, s1, s2, s3});
    }
 
-   [[eosio::action]]
+   [[dcd::action]]
    void makekeystct() {
       my_table t{"kvtest"_n};
       check_index(t.tstruct, {s1, s3, s2, s4, s5});
    }
 
-   [[eosio::action]]
+   [[dcd::action]]
    void makekeytup() {
       my_table t{"kvtest"_n};
       check_index(t.ttuple, {s1, s2, s3, s4, s5});

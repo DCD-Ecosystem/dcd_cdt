@@ -1,5 +1,5 @@
-#include <eosio/eosio.hpp>
-using namespace eosio;
+#include <dcd/dcd.hpp>
+using namespace dcd;
 
 CONTRACT hello : public contract {
    public:
@@ -18,5 +18,5 @@ ACTION hello::hi( name nm ) {
 
 ACTION hello::check( name nm ) {
    print_f("Name : %\n", nm);
-   eosio::check(nm == "hello"_n, "check name not equal to `hello`");
+   dcd::check(nm == "hello"_n, "check name not equal to `hello`");
 }

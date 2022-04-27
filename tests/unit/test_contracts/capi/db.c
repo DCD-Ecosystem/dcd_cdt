@@ -1,4 +1,4 @@
-#include <eosio/db.h>
+#include <dcd/db.h>
 #include <stddef.h>
 
 void test_db( void ) {

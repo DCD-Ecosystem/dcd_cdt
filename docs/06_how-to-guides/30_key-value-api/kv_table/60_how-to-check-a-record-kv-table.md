@@ -10,16 +10,16 @@ This how-to provides instructions to check if a specific object exists in a `Key
 [[caution | Alpha version]]
 | `Key-Value Table` is designated as `alpha` and should not be used in production code.
 
-Use the  method `exists` defined by the `eosio::kv::table::index` class to accomplish this task.
+Use the  method `exists` defined by the `dcd::kv::table::index` class to accomplish this task.
 
 ## Before you begin
 
 Make sure you have the following prerequisites in place:
 
-* An EOSIO development environment, for details consult the [Get Started Guide](https://developers.eos.io/welcome/latest/getting-started-guide/index)
+* An DCD development environment, for details consult the [Get Started Guide](https://developers.dcd.io/welcome/latest/getting-started-guide/index)
 * A smart contract named `smrtcontract`
 * A user defined type, `struct` or `class`, which defines the data stored in the map, named `person`
-* A `kv table` data type, `struct` or `class`, which inherits `eosio::kv::table`, and stores objects of type `person`, named `address_table`
+* A `kv table` data type, `struct` or `class`, which inherits `dcd::kv::table`, and stores objects of type `person`, named `address_table`
 * Each `person` object has the following data members:
   * `account_name`,
   * `first_name`,
@@ -33,14 +33,14 @@ Refer to the following reference implementation for your starting point:
 
 ```cpp
 struct person {
-  eosio::name account_name;
+  dcd::name account_name;
   std::string first_name;
   std::string last_name;
   std::string personal_id;
 };
 
-class [[eosio::contract]] smrtcontract : public contract {
-    struct [[eosio::table]] address_table : eosio::kv::table<person, "kvaddrbook"_n> {
+class [[dcd::contract]] smrtcontract : public contract {
+    struct [[dcd::table]] address_table : dcd::kv::table<person, "kvaddrbook"_n> {
 
      index<name> account_name_uidx {
         name{"accname"_n},
@@ -68,8 +68,8 @@ Refer to the following reference implementation to implement an action that is v
 `smartcontract.hpp`
 
 ```cpp
-class [[eosio::contract]] smrtcontract : public contract {
-    struct [[eosio::table]] address_table : eosio::kv::table<person, "kvaddrbook"_n> {
+class [[dcd::contract]] smrtcontract : public contract {
+    struct [[dcd::table]] address_table : dcd::kv::table<person, "kvaddrbook"_n> {
 
      index<name> account_name_uidx {
         name{"accname"_n},
@@ -83,8 +83,8 @@ class [[eosio::contract]] smrtcontract : public contract {
      using contract::contract;
 
      // checks if a person with a specific account name exists in addressbook
-     [[eosio::action]]
-     bool verify(eosio::name account_name);
+     [[dcd::action]]
+     bool verify(dcd::name account_name);
 
      using verify_action = action_wrapper<"verify"_n, &smrtcontract::verify>;
 };
@@ -94,7 +94,7 @@ class [[eosio::contract]] smrtcontract : public contract {
 
 ```cpp
 // checks if a person with a specific account name exists in addressbook
-[[eosio::action]]
+[[dcd::action]]
 bool smrtcontract::verify(string personal_id, string country) {
   address_table addresses{"kvaddrbook"_n};
 

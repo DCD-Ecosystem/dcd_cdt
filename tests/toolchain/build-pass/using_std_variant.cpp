@@ -1,27 +1,27 @@
 /*
- * Regression test for https://github.com/EOSIO/eosio.cdt/issues/558
+ * Regression test for https://github.com/DCD/dcd.cdt/issues/558
  *
  * Verifies that a class/function can be used from the std namespace
  */
 
-#include <eosio/eosio.hpp>
-#include <eosio/print.hpp>
+#include <dcd/dcd.hpp>
+#include <dcd/print.hpp>
 #include <variant>
 
 using std::variant;
-using namespace eosio;
+using namespace dcd;
 
-class[[eosio::contract("hello")]] hello : public contract
+class[[dcd::contract("hello")]] hello : public contract
 {
 public:
    using contract::contract;
 
-   [[eosio::action]] void hi(name user) {
+   [[dcd::action]] void hi(name user) {
       require_auth(user);
       print("Hello, ", user);
    }
 
-   struct [[eosio::table]] greeting {
+   struct [[dcd::table]] greeting {
       uint64_t id;
       variant<int32_t, int64_t> t;
       uint64_t primary_key() const { return id; }

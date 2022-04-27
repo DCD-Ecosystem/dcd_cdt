@@ -14,7 +14,7 @@ content_title: Troubleshooting
         "what":"Provided keys, permissions, and delays do not satisfy declared authorizations",
         "details":[
             {
-                "message":"transaction declares authority '{"actor":"account_name","permission":"permission_name"}', but does not have signatures for it under a provided delay of 0 ms, provided permissions [], provided keys ["EOS5ZcMvpgtDMdVtvCFewAQYTyfN6Vqhg4kdgauffx3jiaKaeWfY1"], and a delay max limit of 3888000000 ms",
+                "message":"transaction declares authority '{"actor":"account_name","permission":"permission_name"}', but does not have signatures for it under a provided delay of 0 ms, provided permissions [], provided keys ["DCD5ZcMvpgtDMdVtvCFewAQYTyfN6Vqhg4kdgauffx3jiaKaeWfY1"], and a delay max limit of 3888000000 ms",
                 "file":"authorization_manager.cpp",
                 "line_number":524,
                 "method":"check_authorization"
@@ -37,7 +37,7 @@ Unexpected input encountered while processing struct 'action_name_here'
 __Possible solution__: You did not specify correctly the parameter when sending the action to the blockchain. When no parameter is needed the command should look like the one below
 
 ```sh
-cleos push action eostutorial1 get '[]' -p eostutorial1@active
+cldcd push action dcdtutorial1 get '[]' -p dcdtutorial1@active
 ```
 
 The command above is one way of sending correctly `get` action with no parameters to the blockchain.
@@ -46,10 +46,10 @@ The command above is one way of sending correctly `get` action with no parameter
 
 ```console
 error 2019-09-25T07:38:14.859 thread-0  main.cpp:3449                 main                 ] Failed with error: Assert Exception (10)
-!action_type.empty(): Unknown action action_name in contract eostutorial1
+!action_type.empty(): Unknown action action_name in contract dcdtutorial1
 ```
 
-__Possible solution__: Verify if the action attribute `[[eosio::action]]` is used when defining and/or declaring the action `action_name` for the contract.
+__Possible solution__: Verify if the action attribute `[[dcd::action]]` is used when defining and/or declaring the action `action_name` for the contract.
 
 ## When deploying a contract code to the blockchain a similar error with the ones below is encountered
 
@@ -59,7 +59,7 @@ or
 Error 3160009: No wasm file found
 ```
 
-__Possible solution__: Verify that `abi` and `wasm` files exist in the directory specified in the `cleos set contract` command, and that their names match the directory name.
+__Possible solution__: Verify that `abi` and `wasm` files exist in the directory specified in the `cldcd set contract` command, and that their names match the directory name.
 
 ## Action triggers a ram charge which cannot be initiated from a notification
 
@@ -68,13 +68,13 @@ __Possible solution__: This error happens because the notification action has no
 ## You successfully re-deployed the contract code, but when you query the table you get the custom message that you coded when the table is not initialized (doesn't exist), or the system error message below in case you do not have code that checks first if table exist
 
 ```console
-Error 3050003: eosio_assert_message assertion failure
+Error 3050003: dcd_assert_message assertion failure
 Error Details:
 assertion failure with message: singleton does not exist
 pending console output: 
 ```
 
-__Possible solution__: It is possible that you changed the table name? That is the first, of `eosio::name` type, parameter which you passed to the `eosio::template` type alias definition. Or did you change the table structure definition at all? If you need to change the table structure definition there are some limitations and a couple of ways to do it which are explained in the [Data Design and Migration](./07_best-practices/04_data-design-and-migration.md) section.
+__Possible solution__: It is possible that you changed the table name? That is the first, of `dcd::name` type, parameter which you passed to the `dcd::template` type alias definition. Or did you change the table structure definition at all? If you need to change the table structure definition there are some limitations and a couple of ways to do it which are explained in the [Data Design and Migration](./07_best-practices/04_data-design-and-migration.md) section.
 
 ## You successfully re-deployed the contract code, but when you query the table you get the fields of the row values swapped, that is, it appears the values stored in table rows are the same only that they are swapped between fields/columns
 
@@ -89,18 +89,18 @@ Couldn't parse type_name
 
 __Possible solution__: It is possible that you changed the type of the fields for the table struct definition? If you need to change the table structure definition there are some limitations and a couple of ways to do it which are explained in the [Data Design and Migration](./07_best-practices/04_data-design-and-migration.md) section.
 
-## eosio-cpp process never completes
+## dcd-cpp process never completes
 
-__Possible solution__: make sure you have at least 2 cores on the host that executes the eosio-cpp (e.g. docker container, VM, local sub-system)
+__Possible solution__: make sure you have at least 2 cores on the host that executes the dcd-cpp (e.g. docker container, VM, local sub-system)
 
 ## You can not find the `now()` time function, or the result of the `current_time_point` functions are not what you expected them to be
 
-__Possible solution__: The `now()` function has been replaced by `current_time_point().sec_since_epoch()`, it returns the time in microseconds from 1970 of the `current block` as a time_point. There's also available `current_block_time()` which returns the time in microseconds from 1970 of the `current block` as a `block_timestamp`. Be aware that for time base functions, the assumption is when you call something like `now()` or `current_time()` you will get the exact now/current time, however that is not the case with EOSIO, you get __the block time__, and only ever get __the block time__ from the available `sec_since_epoch()` or `current_block_time()` no matter how many times you call it.
+__Possible solution__: The `now()` function has been replaced by `current_time_point().sec_since_epoch()`, it returns the time in microseconds from 1970 of the `current block` as a time_point. There's also available `current_block_time()` which returns the time in microseconds from 1970 of the `current block` as a `block_timestamp`. Be aware that for time base functions, the assumption is when you call something like `now()` or `current_time()` you will get the exact now/current time, however that is not the case with DCD, you get __the block time__, and only ever get __the block time__ from the available `sec_since_epoch()` or `current_block_time()` no matter how many times you call it.
 
 ## You successfully re-deployed the contract code, but when you broadcast one of the contracts methods to the blockchain you get below error message
 
 ```console
-Error 3050004: eosio_assert_code assertion failure
+Error 3050004: dcd_assert_code assertion failure
 Error Details:
 assertion failure with error code: 8000000000000000000
 ```
@@ -117,7 +117,7 @@ The below code will print just the first line of the iteration.
   auto index=0;
   for (auto& item : testtab)
   {
-    eosio::print_f("{item %}={%, %, %} \n", ++index, item.test_primary, item.secondary, item.datum);
+    dcd::print_f("{item %}={%, %, %} \n", ++index, item.test_primary, item.secondary, item.datum);
   }
 ```
 
@@ -127,22 +127,22 @@ The below code will print all lines of the iteration separated by `'|'` char.
   auto index=0;
   for (auto& item : testtab)
   {
-    eosio::print_f("{item %}={%, %, %} |", ++index, item.test_primary, item.secondary, item.datum);
+    dcd::print_f("{item %}={%, %, %} |", ++index, item.test_primary, item.secondary, item.datum);
   }
 ```
 
 ## Print statements from smart contract code are not shown in the `expected order`
 
-__Possible solution__: The key point here is the `expected order` and what you think it should be. Although the EOSIO is single threaded, when looking at your smart contract action code implementation, which let's say it has a series of `print` (either `print_f` or `printf`) statements, they might not necessarily be outputted in the order the `apparent` code workflow is. One example is when inline transactions are sent from your smart contract action code, and you expect to see the `print` statements from within the inline action code outputted before the `print` statements made after the inline action `send` statement. For better exemplification let's look at the code below:
+__Possible solution__: The key point here is the `expected order` and what you think it should be. Although the DCD is single threaded, when looking at your smart contract action code implementation, which let's say it has a series of `print` (either `print_f` or `printf`) statements, they might not necessarily be outputted in the order the `apparent` code workflow is. One example is when inline transactions are sent from your smart contract action code, and you expect to see the `print` statements from within the inline action code outputted before the `print` statements made after the inline action `send` statement. For better exemplification let's look at the code below:
 
 ```cpp
-[[eosio::action]] void multi_index_example::mod( name user, uint64_t n ) {
+[[dcd::action]] void multi_index_example::mod( name user, uint64_t n ) {
 
   // `mod` action implementation code goes here...
 
   print_f("Output line before the inline send action.")
 
-  singleton_set_action singleton_set("eostutorial1"_n, {get_self(), "active"_n});
+  singleton_set_action singleton_set("dcdtutorial1"_n, {get_self(), "active"_n});
   singleton_set.send(get_self(), n, get_self());
 
   print_f("Output line after the inline send action.")
@@ -151,17 +151,17 @@ __Possible solution__: The key point here is the `expected order` and what you t
 
 The code above has one `print` statement before the `singleton_set.send` and another one after the `singleton_set.send`. If you wrote some more `print` statements in the code that implements the `singleton_set.send` action and expect to see them before the second `print` statement then it is a wrong assumption. The inline actions are broadcasted to the network and they are executed at a different time, asynchronous of the current execution thread of the current `multi_index_example::mod` action, therefor it is impossible to predict when the `print` statements from inline action code will be outputted.
 
-## Assertion failure while creating an account after eosio.system was installed
+## Assertion failure while creating an account after dcd.system was installed
 
 ```sh
-cleos create account eosio bob EOS5HUanbay86UUnr1d4fuBsQ3ksjfgZYoLUVvrYVLy6pj4i8xqVY
+cldcd create account dcd bob DCD5HUanbay86UUnr1d4fuBsQ3ksjfgZYoLUVvrYVLy6pj4i8xqVY
 ```
 
 ```console
-Error 3050003: eosio_assert_message assertion failure
+Error 3050003: dcd_assert_message assertion failure
 Error Details:
 assertion failure with message: system contract must first be initialized
 ```
 
-The failure is stating that `eosio.system` `init` action was not called yet. The `init` action is implemented by the `void init(uint64_t, symbol)` function. The first parameter is the version, this should always be `0` for now, until a new version of `init` will be created that handles more information.
-The second parameter is the system's symbol (i.e. for main net this is `EOS`). If you followed the [BIOS Boot Sequence](https://developers.eos.io/welcome/latest/tutorials/bios-boot-sequence) tutorial and created a system with the default symbol `SYS` then `SYS` shall be used as the system's symbol in the `init` action. It is whatever symbol you as the chain creator want to use in your `EOSIO` based blockchain.
+The failure is stating that `dcd.system` `init` action was not called yet. The `init` action is implemented by the `void init(uint64_t, symbol)` function. The first parameter is the version, this should always be `0` for now, until a new version of `init` will be created that handles more information.
+The second parameter is the system's symbol (i.e. for main net this is `DCD`). If you followed the [BIOS Boot Sequence](https://developers.dcd.io/welcome/latest/tutorials/bios-boot-sequence) tutorial and created a system with the default symbol `SYS` then `SYS` shall be used as the system's symbol in the `init` action. It is whatever symbol you as the chain creator want to use in your `DCD` based blockchain.

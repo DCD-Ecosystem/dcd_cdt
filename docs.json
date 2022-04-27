@@ -1,5 +1,5 @@
 {
-	"name": "eosio.cdt",
+	"name": "dcd.cdt",
 	"generators": [
     	{
 			"name": "collate_markdown",
@@ -10,7 +10,7 @@
 		{
 			"name": "doxygen_to_xml",
 			"options": {
-				"INPUT": "libraries/eosiolib",
+				"INPUT": "libraries/dcdlib",
 				"EXCLUDE_PATTERNS": "*.cpp *.c",
 				"ENABLE_PREPROCESSING": "YES",
 				"MACRO_EXPANSION": "YES",

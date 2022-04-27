@@ -1,15 +1,15 @@
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/unit_test.hpp>
 
-#include <eosio/chain/abi_serializer.hpp>
-#include <eosio/testing/tester.hpp>
+#include <dcd/chain/abi_serializer.hpp>
+#include <dcd/testing/tester.hpp>
 
 #include <fc/variant_object.hpp>
 
 #include <contracts.hpp>
 
-using namespace eosio;
-using namespace eosio::testing;
+using namespace dcd;
+using namespace dcd::testing;
 
 using mvo = fc::mutable_variant_object;
 
@@ -24,7 +24,7 @@ struct kv_tester {
       /*
       chain.close();
       auto cfg = chain.get_config();
-      cfg.backing_store = eosio::chain::backing_store_type::ROCKSDB;
+      cfg.backing_store = dcd::chain::backing_store_type::ROCKSDB;
       chain.init(cfg);
       */
 
@@ -47,8 +47,8 @@ struct kv_tester {
          chain.push_action("kvtest"_n, act, "kvtest"_n, {});
       } else {
          BOOST_CHECK_EXCEPTION(chain.push_action("kvtest"_n, act, "kvtest"_n, {}),
-                               eosio_assert_message_exception,
-                               eosio_assert_message_is(exception_msg));
+                               dcd_assert_message_exception,
+                               dcd_assert_message_is(exception_msg));
       }
    }
 
@@ -96,8 +96,8 @@ BOOST_AUTO_TEST_CASE(single_tests_find) try {
    tester.push_action("kvtest"_n, "find"_n, "kvtest"_n, {});
 
    BOOST_CHECK_EXCEPTION(tester.push_action("kvtest"_n, "finderror"_n, "kvtest"_n, {}),
-                         eosio_assert_message_exception,
-                         eosio_assert_message_is("Cannot read end iterator"));
+                         dcd_assert_message_exception,
+                         dcd_assert_message_is("Cannot read end iterator"));
 } FC_LOG_AND_RETHROW()
 
 BOOST_AUTO_TEST_CASE(single_tests_get) try {
@@ -106,8 +106,8 @@ BOOST_AUTO_TEST_CASE(single_tests_get) try {
    tester.push_action("kvtest"_n, "get"_n, "kvtest"_n, {});
 
    BOOST_CHECK_EXCEPTION(tester.push_action("kvtest"_n, "geterror"_n, "kvtest"_n, {}),
-                         eosio_assert_message_exception,
-                         eosio_assert_message_is("Key not found in `[]`"));
+                         dcd_assert_message_exception,
+                         dcd_assert_message_is("Key not found in `[]`"));
 } FC_LOG_AND_RETHROW()
 
 BOOST_FIXTURE_TEST_CASE(single_tests_bounds, tester) try {
@@ -122,12 +122,12 @@ BOOST_FIXTURE_TEST_CASE(single_tests_iteration, tester) try {
    tester.push_action("kvtest"_n, "iteration"_n, "kvtest"_n, {});
 
    BOOST_CHECK_EXCEPTION(tester.push_action("kvtest"_n, "itrerror1"_n, "kvtest"_n, {}),
-                         eosio_assert_message_exception,
-                         eosio_assert_message_is("cannot increment end iterator"));
+                         dcd_assert_message_exception,
+                         dcd_assert_message_is("cannot increment end iterator"));
 
    BOOST_CHECK_EXCEPTION(tester.push_action("kvtest"_n, "itrerror2"_n, "kvtest"_n, {}),
-                         eosio_assert_message_exception,
-                         eosio_assert_message_is("decremented past the beginning"));
+                         dcd_assert_message_exception,
+                         dcd_assert_message_is("decremented past the beginning"));
 } FC_LOG_AND_RETHROW()
 
 BOOST_FIXTURE_TEST_CASE(single_tests_reverse_iteration, tester) try {
@@ -136,12 +136,12 @@ BOOST_FIXTURE_TEST_CASE(single_tests_reverse_iteration, tester) try {
    tester.push_action("kvtest"_n, "riteration"_n, "kvtest"_n, {});
 
    BOOST_CHECK_EXCEPTION(tester.push_action("kvtest"_n, "ritrerror1"_n, "kvtest"_n, {}),
-                         eosio_assert_message_exception,
-                         eosio_assert_message_is("incremented past the end"));
+                         dcd_assert_message_exception,
+                         dcd_assert_message_is("incremented past the end"));
 
    BOOST_CHECK_EXCEPTION(tester.push_action("kvtest"_n, "ritrerror2"_n, "kvtest"_n, {}),
-                         eosio_assert_message_exception,
-                         eosio_assert_message_is("decremented past the beginning"));
+                         dcd_assert_message_exception,
+                         dcd_assert_message_is("decremented past the beginning"));
 } FC_LOG_AND_RETHROW()
 
 BOOST_FIXTURE_TEST_CASE(single_tests_range, tester) try {
@@ -182,11 +182,11 @@ BOOST_FIXTURE_TEST_CASE(multi_tests_update, tester) try {
    tester.push_action("kvtest"_n, "update"_n, "kvtest"_n, {});
 
    BOOST_CHECK_EXCEPTION(tester.push_action("kvtest"_n, "updateerr1"_n, "kvtest"_n, {}),
-                         eosio_assert_message_exception,
-                         eosio_assert_message_is("Attempted to update an existing secondary index."));
+                         dcd_assert_message_exception,
+                         dcd_assert_message_is("Attempted to update an existing secondary index."));
    BOOST_CHECK_EXCEPTION(tester.push_action("kvtest"_n, "updateerr2"_n, "kvtest"_n, {}),
-                         eosio_assert_message_exception,
-                         eosio_assert_message_is("Attempted to store an existing secondary index."));
+                         dcd_assert_message_exception,
+                         dcd_assert_message_is("Attempted to store an existing secondary index."));
 } FC_LOG_AND_RETHROW()
 
 // Make Key

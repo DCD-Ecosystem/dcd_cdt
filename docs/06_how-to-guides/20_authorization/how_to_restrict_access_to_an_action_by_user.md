@@ -16,10 +16,10 @@ This guide provides instructions how to perform authorization checks in a smart 
 
 See the following code reference guides for functions which can be used to implement authorization checks in a smart contract:
 
-* function [has_auth(name n)](https://developers.eos.io/manuals/eosio.cdt/latest/namespaceeosio#function-has_auth)
-* function [require_auth(name n)](https://developers.eos.io/manuals/eosio.cdt/latest/namespaceeosio/#function-require_auth-12)
-* function [require_auth2(capi_name name, capi_name permission)](https://developers.eos.io/manuals/eosio.cdt/v1.8/group__action__c#function-require_auth2)
-* function [check(bool pred, ...)](https://developers.eos.io/manuals/eosio.cdt/latest/group__system/#function-check)
+* function [has_auth(name n)](https://developers.dcd.io/manuals/dcd.cdt/latest/namespacedcd#function-has_auth)
+* function [require_auth(name n)](https://developers.dcd.io/manuals/dcd.cdt/latest/namespacedcd/#function-require_auth-12)
+* function [require_auth2(capi_name name, capi_name permission)](https://developers.dcd.io/manuals/dcd.cdt/v1.8/group__action__c#function-require_auth2)
+* function [check(bool pred, ...)](https://developers.dcd.io/manuals/dcd.cdt/latest/group__system/#function-check)
 
 ## Procedure
 
@@ -37,7 +37,7 @@ The following code example enforces the action `hi` to be executed only by the a
 | Observe that in this case the yielded error message is a custom one and thus it can be used to provide a better experience for the user.
 
 ```cpp
-#include <capi/eosio/action.h>
+#include <capi/dcd/action.h>
 
 void hi( name user ) {
    check(has_auth(user), "User is not authorized to perform this action.");
@@ -45,7 +45,7 @@ void hi( name user ) {
 }
 ```
 
-Another example can be found in the [Tic Tac Toe Tutorial](https://developers.eos.io/welcome/latest/tutorials/tic-tac-toe-game-contract/#action-handler---move).
+Another example can be found in the [Tic Tac Toe Tutorial](https://developers.dcd.io/welcome/latest/tutorials/tic-tac-toe-game-contract/#action-handler---move).
 
 ### 2. Use require_auth
 
@@ -66,7 +66,7 @@ void hi( name user ) {
 The below code is enforces the action `hi` to be executed only by the account that is sent as parameter to the action and only if the permission used to sign the transaction is the 'active' one. In other words, if the same user uses the transaction with a different permission (e.g. code, owner) the execution of the action is halted.
 
 ```cpp
-#include <capi/eosio/action.h>
+#include <capi/dcd/action.h>
 
 void hi( name user ) {
    require_auth2(user.value, "active"_n.value);

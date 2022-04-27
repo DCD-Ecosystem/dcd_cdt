@@ -1,7 +1,7 @@
 SET(SRC_FILENAMES algorithm.cpp any.cpp bind.cpp charconv.cpp chrono.cpp condition_variable.cpp functional.cpp
                   future.cpp hash.cpp ios.cpp iostream.cpp locale.cpp memory.cpp mutex.cpp new.cpp optional.cpp
                   regex.cpp stdexcept.cpp string.cpp strstream.cpp system_error.cpp exception.cpp
-                  typeinfo.cpp utility.cpp valarray.cpp variant.cpp vector.cpp eosio.cpp)
+                  typeinfo.cpp utility.cpp valarray.cpp variant.cpp vector.cpp dcd.cpp)
 
 SET(SRC_FILES "")
 FOREACH(FN ${SRC_FILENAMES})
@@ -21,7 +21,7 @@ target_include_directories(c++
                            ${CMAKE_SOURCE_DIR}/libc/musl/include
                            ${CMAKE_SOURCE_DIR}/libc/musl/src/internal
                            ${CMAKE_SOURCE_DIR}/libc/musl/src/crypt
-                           ${CMAKE_SOURCE_DIR}/libc/musl/arch/eos)
+                           ${CMAKE_SOURCE_DIR}/libc/musl/arch/dcd)
 
 target_link_libraries(c++ c)
 target_compile_definitions(c++ PUBLIC -D_LIBCPP_BUILDING_LIBRARY)
@@ -37,7 +37,7 @@ if (ENABLE_NATIVE_COMPILER)
                               ${CMAKE_SOURCE_DIR}/libc/musl/include
                               ${CMAKE_SOURCE_DIR}/libc/musl/src/internal
                               ${CMAKE_SOURCE_DIR}/libc/musl/src/crypt
-                              ${CMAKE_SOURCE_DIR}/libc/musl/arch/eos)
+                              ${CMAKE_SOURCE_DIR}/libc/musl/arch/dcd)
 
    target_link_libraries(native_c++ native_c)
    target_compile_definitions(native_c++ PUBLIC -D_LIBCPP_BUILDING_LIBRARY)

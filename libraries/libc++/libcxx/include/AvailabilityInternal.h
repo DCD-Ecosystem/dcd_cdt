@@ -34,7 +34,7 @@
 
 #ifndef __IPHONE_OS_VERSION_MIN_REQUIRED
     #ifdef __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__
-        /* compiler sets __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__ when -miphoneos-version-min is used */
+        /* compiler sets __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__ when -miphondcd-version-min is used */
         #define __IPHONE_OS_VERSION_MIN_REQUIRED __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__
     #endif
 #endif
@@ -61,7 +61,7 @@
 
 #ifndef __BRIDGE_OS_VERSION_MIN_REQUIRED
     #ifdef __ENVIRONMENT_BRIDGE_OS_VERSION_MIN_REQUIRED__
-        /* compiler sets __ENVIRONMENT_BRIDGE_OS_VERSION_MIN_REQUIRED__ when -mbridgeos-version-min is used */
+        /* compiler sets __ENVIRONMENT_BRIDGE_OS_VERSION_MIN_REQUIRED__ when -mbridgdcd-version-min is used */
         #define __BRIDGE_OS_VERSION_MIN_REQUIRED __ENVIRONMENT_BRIDGE_OS_VERSION_MIN_REQUIRED__
         #define __BRIDGE_OS_VERSION_MAX_ALLOWED 20000
         /* for compatibility with existing code.  New code should use platform specific checks */
@@ -33217,20 +33217,20 @@
      * Use to specify the release that a particular API became available.
      *
      * Platform names:
-     *   macos, ios, tvos, watchos, bridgeos
+     *   macos, ios, tvos, watchos, bridgdcd
      *
      * Examples:
      *    __API_AVAILABLE(macos(10.10))
      *    __API_AVAILABLE(macos(10.9), ios(10.0))
      *    __API_AVAILABLE(macos(10.4), ios(8.0), watchos(2.0), tvos(10.0))
-     *    __API_AVAILABLE(macos(10.4), ios(8.0), watchos(2.0), tvos(10.0), bridgeos(2.0))
+     *    __API_AVAILABLE(macos(10.4), ios(8.0), watchos(2.0), tvos(10.0), bridgdcd(2.0))
      */
     #define __API_AVAILABLE_PLATFORM_macos(x) macos,introduced=x
     #define __API_AVAILABLE_PLATFORM_macosx(x) macosx,introduced=x
     #define __API_AVAILABLE_PLATFORM_ios(x) ios,introduced=x
     #define __API_AVAILABLE_PLATFORM_watchos(x) watchos,introduced=x
     #define __API_AVAILABLE_PLATFORM_tvos(x) tvos,introduced=x
-    #define __API_AVAILABLE_PLATFORM_bridgeos(x) bridgeos,introduced=x
+    #define __API_AVAILABLE_PLATFORM_bridgdcd(x) bridgdcd,introduced=x
 
     #define __API_A(x) __attribute__((availability(__API_AVAILABLE_PLATFORM_##x)))
     #define __API_AVAILABLE1(x) __API_A(x)
@@ -33246,7 +33246,7 @@
      * Use to specify the release that a particular API became unavailable.
      *
      * Platform names:
-     *   macos, ios, tvos, watchos, bridgeos
+     *   macos, ios, tvos, watchos, bridgdcd
      *
      * Examples:
      *
@@ -33261,7 +33261,7 @@
     #define __API_DEPRECATED_PLATFORM_ios(x,y) ios,introduced=x,deprecated=y
     #define __API_DEPRECATED_PLATFORM_watchos(x,y) watchos,introduced=x,deprecated=y
     #define __API_DEPRECATED_PLATFORM_tvos(x,y) tvos,introduced=x,deprecated=y
-    #define __API_DEPRECATED_PLATFORM_bridgeos(x,y) bridgeos,introduced=x,deprecated=y
+    #define __API_DEPRECATED_PLATFORM_bridgdcd(x,y) bridgdcd,introduced=x,deprecated=y
 
     #define __API_D(msg,x) __attribute__((availability(__API_DEPRECATED_PLATFORM_##x,message=msg)))
     #define __API_DEPRECATED_MSG2(msg,x) __API_D(msg,x)
@@ -33297,7 +33297,7 @@
     #define __API_UNAVAILABLE_PLATFORM_ios ios,unavailable
     #define __API_UNAVAILABLE_PLATFORM_watchos watchos,unavailable
     #define __API_UNAVAILABLE_PLATFORM_tvos tvos,unavailable
-    #define __API_UNAVAILABLE_PLATFORM_bridgeos bridgeos,unavailable
+    #define __API_UNAVAILABLE_PLATFORM_bridgdcd bridgdcd,unavailable
 
     #define __API_U(x) __attribute__((availability(__API_UNAVAILABLE_PLATFORM_##x)))
     #define __API_UNAVAILABLE1(x) __API_U(x)

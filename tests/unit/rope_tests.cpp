@@ -1,17 +1,17 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in dcd.cdt/LICENSE.txt
  */
 
-#include <eosio/eosio.hpp>
-#include <eosio/rope.hpp>
-#include <eosio/tester.hpp>
+#include <dcd/dcd.hpp>
+#include <dcd/rope.hpp>
+#include <dcd/tester.hpp>
 #include <string>
 
-using namespace eosio::native;
+using namespace dcd::native;
 
-EOSIO_TEST_BEGIN(rope_test)
-   eosio::rope r("test string 0");
+DCD_TEST_BEGIN(rope_test)
+   dcd::rope r("test string 0");
    r += ", test string 1";
    r += ", test string 2";
    r += ", test string 3";
@@ -29,10 +29,10 @@ EOSIO_TEST_BEGIN(rope_test)
    s += ", test string 6";
    s += ", test string 7";
 
-   eosio::rope r2 = r + eosio::rope("lhs") + eosio::rope("rhs") + "some string";
+   dcd::rope r2 = r + dcd::rope("lhs") + dcd::rope("rhs") + "some string";
    std::string s2 = s + std::string("lhs") + std::string("rhs") + "some string";
 
-   r2 += eosio::rope("rvalue +=");
+   r2 += dcd::rope("rvalue +=");
    s2 += std::string("rvalue +=");
 
    r2 = r2 + r2;
@@ -41,7 +41,7 @@ EOSIO_TEST_BEGIN(rope_test)
    r2 += "the end";
    s2 += "the end";
 
-   eosio::rope r3(r2);
+   dcd::rope r3(r2);
    std::string s3(s2);
 
    REQUIRE_EQUAL(s.compare(std::string(r.c_str())), 0);
@@ -63,7 +63,7 @@ EOSIO_TEST_BEGIN(rope_test)
    for (int i=0; i < s3.length(); i++) {
       REQUIRE_EQUAL(s3[i], r3[i]);
    }
-EOSIO_TEST_END
+DCD_TEST_END
 
 int main(int argc, char** argv) {
    bool verbose = false;
@@ -72,6 +72,6 @@ int main(int argc, char** argv) {
    }
    silence_output(!verbose);
 
-   EOSIO_TEST(rope_test);
+   DCD_TEST(rope_test);
    return has_failed();
 }

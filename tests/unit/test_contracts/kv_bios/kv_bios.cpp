@@ -1,28 +1,28 @@
-#include <eosio/contract.hpp>
-#include <eosio/name.hpp>
-#include <eosio/privileged.hpp>
+#include <dcd/contract.hpp>
+#include <dcd/name.hpp>
+#include <dcd/privileged.hpp>
 
-extern "C" __attribute__((eosio_wasm_import)) void set_resource_limit(int64_t, int64_t, int64_t);
-extern "C" __attribute__((eosio_wasm_import)) uint32_t get_kv_parameters_packed(void* params, uint32_t size, uint32_t max_version);
-extern "C" __attribute__((eosio_wasm_import)) void set_kv_parameters_packed(const char* params, uint32_t size);
+extern "C" __attribute__((dcd_wasm_import)) void set_resource_limit(int64_t, int64_t, int64_t);
+extern "C" __attribute__((dcd_wasm_import)) uint32_t get_kv_parameters_packed(void* params, uint32_t size, uint32_t max_version);
+extern "C" __attribute__((dcd_wasm_import)) void set_kv_parameters_packed(const char* params, uint32_t size);
 
-using namespace eosio;
+using namespace dcd;
 
 // Manages resources used by the kv-store
-class [[eosio::contract]] kv_bios : eosio::contract {
+class [[dcd::contract]] kv_bios : dcd::contract {
  public:
    using contract::contract;
-   [[eosio::action]] void setdisklimit(name account, int64_t limit) {
+   [[dcd::action]] void setdisklimit(name account, int64_t limit) {
       set_resource_limit(account.value, "disk"_n.value, limit);
    }
-   [[eosio::action]] void setramlimit(name account, int64_t limit) {
+   [[dcd::action]] void setramlimit(name account, int64_t limit) {
       set_resource_limit(account.value, "ram"_n.value, limit);
    }
-   [[eosio::action]] void ramkvlimits(uint32_t k, uint32_t v, uint32_t i) {
-      kvlimits_impl("eosio.kvram"_n, k, v, i);
+   [[dcd::action]] void ramkvlimits(uint32_t k, uint32_t v, uint32_t i) {
+      kvlimits_impl("dcd.kvram"_n, k, v, i);
    }
-   [[eosio::action]] void diskkvlimits(uint32_t k, uint32_t v, uint32_t i) {
-      kvlimits_impl("eosio.kvdisk"_n, k, v, i);
+   [[dcd::action]] void diskkvlimits(uint32_t k, uint32_t v, uint32_t i) {
+      kvlimits_impl("dcd.kvdisk"_n, k, v, i);
    }
    void kvlimits_impl(name db, uint32_t k, uint32_t v, uint32_t i) {
       uint32_t limits[4];

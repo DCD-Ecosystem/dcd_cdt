@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(eosio_libraries)
+project(dcd_libraries)
 
 find_program(CCACHE_FOUND ccache)
 if (CCACHE_FOUND)
@@ -8,8 +8,8 @@ if (CCACHE_FOUND)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
 endif()
 
-list(APPEND CMAKE_MODULE_PATH ${EOSIO_CDT_BIN})
-include(EosioCDTMacros)
+list(APPEND CMAKE_MODULE_PATH ${DCD_CDT_BIN})
+include(DcdCDTMacros)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -Wall -no-missing-ricardian-clause")
@@ -19,7 +19,7 @@ set(CMAKE_CXX_EXTENSIONS ON)
 
 add_subdirectory(libc)
 add_subdirectory(libc++)
-add_subdirectory(eosiolib)
+add_subdirectory(dcdlib)
 add_subdirectory(boost)
 add_subdirectory(rt)
 

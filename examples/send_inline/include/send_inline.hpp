@@ -1,11 +1,11 @@
-#include <eosio/eosio.hpp>
-using namespace eosio;
+#include <dcd/dcd.hpp>
+using namespace dcd;
 
-class [[eosio::contract]] send_inline : public contract {
+class [[dcd::contract]] send_inline : public contract {
    public:
       using contract::contract;
 
-      [[eosio::action]]
+      [[dcd::action]]
       void test( name user, name inline_code );
 
       using test_action = action_wrapper<"test"_n, &send_inline::test>;

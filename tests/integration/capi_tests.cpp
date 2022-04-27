@@ -1,6 +1,6 @@
 #include <boost/test/unit_test.hpp>
-#include <eosio/testing/tester.hpp>
-#include <eosio/chain/abi_serializer.hpp>
+#include <dcd/testing/tester.hpp>
+#include <dcd/chain/abi_serializer.hpp>
 
 #include <Runtime/Runtime.h>
 
@@ -8,10 +8,10 @@
 
 #include <contracts.hpp>
 
-using namespace eosio;
-using namespace eosio::testing;
-using namespace eosio::chain;
-using namespace eosio::testing;
+using namespace dcd;
+using namespace dcd::testing;
+using namespace dcd::chain;
+using namespace dcd::testing;
 using namespace fc;
 
 using mvo = fc::mutable_variant_object;

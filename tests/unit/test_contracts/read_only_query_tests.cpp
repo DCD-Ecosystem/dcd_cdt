@@ -1,7 +1,7 @@
-#include <eosio/eosio.hpp>
-#include <eosio/table.hpp>
+#include <dcd/dcd.hpp>
+#include <dcd/table.hpp>
 
-class [[eosio::contract]] read_only_query_tests : public eosio::contract {
+class [[dcd::contract]] read_only_query_tests : public dcd::contract {
 public:
    struct my_struct {
       uint32_t id;
@@ -17,17 +17,17 @@ public:
       }
    };
 
-   struct [[eosio::table]] my_table_m : eosio::kv::table<my_struct, "roqm"_n> {
+   struct [[dcd::table]] my_table_m : dcd::kv::table<my_struct, "roqm"_n> {
       KV_NAMED_INDEX("id"_n, id)
 
-      my_table_m(eosio::name contract_name) {
+      my_table_m(dcd::name contract_name) {
          init(contract_name, id);
       }
    };
-   struct [[eosio::table]] my_table_f : eosio::kv::table<my_struct, "roqf"_n> {
+   struct [[dcd::table]] my_table_f : dcd::kv::table<my_struct, "roqf"_n> {
       KV_NAMED_INDEX("id"_n, id)
 
-      my_table_f(eosio::name contract_name) {
+      my_table_f(dcd::name contract_name) {
          init(contract_name, id);
       }
    };
@@ -81,7 +81,7 @@ public:
       .age = 24,
    };
 
-   [[eosio::action]]
+   [[dcd::action]]
    void setup() {
       my_table_m tm{get_self()};
       my_table_f tf{get_self()};
@@ -96,7 +96,7 @@ public:
       tf.put(s8, get_self());
   }
 
-   [[eosio::action, eosio::read_only]]
+   [[dcd::action, dcd::read_only]]
    std::vector<my_struct> get() {
       my_table_m tm{get_self()};
       my_table_f tf{get_self()};
@@ -104,10 +104,10 @@ public:
       std::vector<my_struct> ret;
       auto itm = tm.id.begin();
       auto itm_e = tm.id.end();
-      eosio::cout << "Males: \n";
+      dcd::cout << "Males: \n";
       while(itm != itm_e){
          auto row = itm.value(); 
-         eosio::cout << "id=" << row.id << ", name=" << row.name << ",gender=" << row.gender << ", age=" << row.age << "\n"; 
+         dcd::cout << "id=" << row.id << ", name=" << row.name << ",gender=" << row.gender << ", age=" << row.age << "\n"; 
          my_struct s;
          s.id = row.id;
          s.name = row.name;
@@ -116,12 +116,12 @@ public:
          ret.push_back(s);
          ++itm;
       }
-      eosio::cout << "Females: \n"; 
+      dcd::cout << "Females: \n"; 
       auto itf = tf.id.begin();
       auto itf_e = tf.id.end();
       while(itf != itf_e){
          auto row = itf.value();
-         eosio::cout << "id=" << row.id << ", name=" << row.name << ",gender=" << row.gender << ", age=" << row.age << "\n"; 
+         dcd::cout << "id=" << row.id << ", name=" << row.name << ",gender=" << row.gender << ", age=" << row.age << "\n"; 
          my_struct s;
          s.id = row.id;
          s.name = row.name;
@@ -132,8 +132,8 @@ public:
      }
      return ret;
    }
-   [[eosio::action]]
-   // usage: cleos -v push action eosio put '{"id":10,"name":"GULU","gender":1,"age":128}' -p eosio@active
+   [[dcd::action]]
+   // usage: cldcd -v push action dcd put '{"id":10,"name":"GULU","gender":1,"age":128}' -p dcd@active
    void put(uint32_t id, std::string name, uint32_t gender, uint32_t age ) {
       my_table_m tm{get_self()};
       my_table_f tf{get_self()};

@@ -1,4 +1,4 @@
-#include <eosio/privileged.h>
+#include <dcd/privileged.h>
 #include <stdint.h>
 
 void test_privileged( void ) {

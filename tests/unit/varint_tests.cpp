@@ -1,19 +1,19 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in dcd.cdt/LICENSE.txt
  */
 
 #include <limits>
 
-#include <eosio/tester.hpp>
-#include <eosio/datastream.hpp>
-#include <eosio/varint.hpp>
+#include <dcd/tester.hpp>
+#include <dcd/datastream.hpp>
+#include <dcd/varint.hpp>
 
 using std::numeric_limits;
 
-using eosio::datastream;
-using eosio::unsigned_int;
-using eosio::signed_int;
+using dcd::datastream;
+using dcd::unsigned_int;
+using dcd::signed_int;
 
 static constexpr uint32_t u32min = numeric_limits<uint32_t>::min(); // 0
 static constexpr uint32_t u32max = numeric_limits<uint32_t>::max(); // 4294967295
@@ -21,8 +21,8 @@ static constexpr uint32_t u32max = numeric_limits<uint32_t>::max(); // 429496729
 static constexpr int32_t i32min = numeric_limits<int32_t>::min(); // -2147483648
 static constexpr int32_t i32max = numeric_limits<int32_t>::max(); //  2147483647
 
-// Defined in `eosio.cdt/libraries/eosio/varint.hpp`
-EOSIO_TEST_BEGIN(unsigned_int_type_test)
+// Defined in `dcd.cdt/libraries/dcd/varint.hpp`
+DCD_TEST_BEGIN(unsigned_int_type_test)
    //// unsigned_int(uint32_t)
    CHECK_EQUAL( unsigned_int{}.value, 0 )
    CHECK_EQUAL( unsigned_int{u32min}.value, 0 )
@@ -121,10 +121,10 @@ EOSIO_TEST_BEGIN(unsigned_int_type_test)
    ds.seekp(0);
    ds >> ui;
    CHECK_EQUAL( cui, ui)
-EOSIO_TEST_END
+DCD_TEST_END
 
-// Defined in `eosio.cdt/libraries/eosio/varint.hpp`
-EOSIO_TEST_BEGIN(signed_int_type_test)
+// Defined in `dcd.cdt/libraries/dcd/varint.hpp`
+DCD_TEST_BEGIN(signed_int_type_test)
    //// signed_int(uint32_t)
    CHECK_EQUAL( signed_int{}.value, 0 )
    CHECK_EQUAL( signed_int{i32min}.value, -2147483648 )
@@ -250,7 +250,7 @@ EOSIO_TEST_BEGIN(signed_int_type_test)
    CHECK_EQUAL( b, bb )
    CHECK_EQUAL( c, cc )
    CHECK_EQUAL( d, dd )
-EOSIO_TEST_END
+DCD_TEST_END
 
 int main(int argc, char* argv[]) {
    bool verbose = false;
@@ -259,7 +259,7 @@ int main(int argc, char* argv[]) {
    }
    silence_output(!verbose);
 
-   EOSIO_TEST(unsigned_int_type_test)
-   EOSIO_TEST(signed_int_type_test);
+   DCD_TEST(unsigned_int_type_test)
+   DCD_TEST(signed_int_type_test);
    return has_failed();
 }

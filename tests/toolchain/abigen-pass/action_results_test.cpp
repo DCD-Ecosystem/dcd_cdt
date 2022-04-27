@@ -1,7 +1,7 @@
-#include <eosio/eosio.hpp>
+#include <dcd/dcd.hpp>
 #include <vector>
 
-using namespace eosio;
+using namespace dcd;
 
 struct test_res {
    int a;
@@ -9,22 +9,22 @@ struct test_res {
    name  c;
 };
 
-class [[eosio::contract]] action_results_test : public contract {
+class [[dcd::contract]] action_results_test : public contract {
    public:
    using contract::contract;
 
-   [[eosio::action]]
+   [[dcd::action]]
    void action1() {}
 
-   [[eosio::action]]
+   [[dcd::action]]
    uint32_t action2() { return 42; }
 
-   [[eosio::action]]
+   [[dcd::action]]
    std::string action3() { return "foo"; }
 
-   [[eosio::action]]
+   [[dcd::action]]
    std::vector<name> action4() { return {"dan"_n}; }
 
-   [[eosio::action]]
+   [[dcd::action]]
    test_res action5() { return {4, 42.4f, "bucky"_n}; }
 };

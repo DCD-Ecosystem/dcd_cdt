@@ -1,24 +1,24 @@
 cmake_minimum_required( VERSION 3.5 )
 
-set(EOSIO_VERSION_MIN "2.0")
-set(EOSIO_VERSION_SOFT_MAX "3.0")
-#set(EOSIO_VERSION_HARD_MAX "")
+set(DCD_VERSION_MIN "2.0")
+set(DCD_VERSION_SOFT_MAX "3.0")
+#set(DCD_VERSION_HARD_MAX "")
 
-find_package(eosio)
+find_package(dcd)
 
-### Check the version of eosio
+### Check the version of dcd
 set(VERSION_MATCH_ERROR_MSG "")
-EOSIO_CHECK_VERSION(VERSION_OUTPUT "${EOSIO_VERSION}"
-                                   "${EOSIO_VERSION_MIN}"
-                                   "${EOSIO_VERSION_SOFT_MAX}"
-                                   "${EOSIO_VERSION_HARD_MAX}"
+DCD_CHECK_VERSION(VERSION_OUTPUT "${DCD_VERSION}"
+                                   "${DCD_VERSION_MIN}"
+                                   "${DCD_VERSION_SOFT_MAX}"
+                                   "${DCD_VERSION_HARD_MAX}"
                                    VERSION_MATCH_ERROR_MSG)
 if(VERSION_OUTPUT STREQUAL "MATCH")
-   message(STATUS "Using eosio version ${EOSIO_VERSION}")
+   message(STATUS "Using dcd version ${DCD_VERSION}")
 elseif(VERSION_OUTPUT STREQUAL "WARN")
-   message(WARNING "Using eosio version ${EOSIO_VERSION} even though it exceeds the maximum supported version of ${EOSIO_VERSION_SOFT_MAX}; continuing with configuration, however build may fail.\nIt is recommended to use eosio version ${EOSIO_VERSION_SOFT_MAX}.x")
+   message(WARNING "Using dcd version ${DCD_VERSION} even though it exceeds the maximum supported version of ${DCD_VERSION_SOFT_MAX}; continuing with configuration, however build may fail.\nIt is recommended to use dcd version ${DCD_VERSION_SOFT_MAX}.x")
 else() # INVALID OR MISMATCH
-   message(FATAL_ERROR "Found eosio version ${EOSIO_VERSION} but it does not satisfy version requirements: ${VERSION_MATCH_ERROR_MSG}\nPlease use eosio version ${EOSIO_VERSION_SOFT_MAX}.x")
+   message(FATAL_ERROR "Found dcd version ${DCD_VERSION} but it does not satisfy version requirements: ${VERSION_MATCH_ERROR_MSG}\nPlease use dcd version ${DCD_VERSION_SOFT_MAX}.x")
 endif(VERSION_OUTPUT STREQUAL "MATCH")
 
 
@@ -30,7 +30,7 @@ include_directories(${CMAKE_BINARY_DIR})
 
 file(GLOB INT_TESTS "*.cpp" "*.hpp")
 
-add_eosio_test_executable( integration_tests ${INT_TESTS} )
+add_dcd_test_executable( integration_tests ${INT_TESTS} )
 
 foreach(TEST_SUITE ${INT_TESTS}) # create an independent target for each test suite
   execute_process(COMMAND bash -c "grep -E 'BOOST_AUTO_TEST_SUITE\\s*[(]' ${TEST_SUITE} | grep -vE '//.*BOOST_AUTO_TEST_SUITE\\s*[(]' | cut -d ')' -f 1 | cut -d '(' -f 2" OUTPUT_VARIABLE SUITE_NAME OUTPUT_STRIP_TRAILING_WHITESPACE) # get the test suite name from the *.cpp file

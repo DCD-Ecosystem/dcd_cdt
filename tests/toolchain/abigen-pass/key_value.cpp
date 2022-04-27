@@ -1,6 +1,6 @@
-#include <eosio/eosio.hpp>
+#include <dcd/dcd.hpp>
 
-using namespace eosio;
+using namespace dcd;
 
 struct some_record {
    std::string full_name;
@@ -8,18 +8,18 @@ struct some_record {
    std::tuple<int, float, char> arbitrary;
 };
 
-class [[eosio::contract]] key_value : eosio::contract {
+class [[dcd::contract]] key_value : dcd::contract {
    public:
-      using eosio::contract::contract;
+      using dcd::contract::contract;
 
-      [[eosio::action]]
+      [[dcd::action]]
       void act1(int k, std::string s) {
          test[k] = s;
 
          test3[s] = some_record{"Block McChain", 42, {13, 42.42f, 'a'}};
       }
 
-      [[eosio::action]]
+      [[dcd::action]]
       void act2(float f, uint64_t v) {
          test2[f] = v;
       }

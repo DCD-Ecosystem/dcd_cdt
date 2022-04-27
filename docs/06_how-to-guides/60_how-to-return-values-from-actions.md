@@ -12,7 +12,7 @@ In order to accomplish this, use the `return` statement and pass the desired ret
 
 Make sure you have the following prerequisites in place:
 
-* An EOSIO development environment, for details consult the [Get Started Guide](https://developers.eos.io/welcome/latest/getting-started-guide/index).
+* An DCD development environment, for details consult the [Get Started Guide](https://developers.dcd.io/welcome/latest/getting-started-guide/index).
 * A smart contract, let’s call it `smrtcontract`, which builds without error.
 * An action, let’s call it `checkwithrv`, from which you want to return a value of a user defined type `action_response`.
 
@@ -25,11 +25,11 @@ struct action_response
   std::pair<int, std::string> status;
 };
 
-class [[eosio::contract]] smrtcontract : public contract {
+class [[dcd::contract]] smrtcontract : public contract {
   public:
      using contract::contract;
 
-     [[eosio::action]]
+     [[dcd::action]]
      action_response checkwithrv( name nm );
 };
 ```
@@ -43,7 +43,7 @@ Complete the following steps to return an instance of `action_response` from the
 3. Use `return` statement and pass as a parameter the instance created and initialized in previous steps.
 
 ```cpp
-[[eosio::action]]
+[[dcd::action]]
 action_response smrtcontract::checkwithrv( name nm ) {
   print_f("Name : %\n", nm);
 
@@ -64,12 +64,12 @@ action_response smrtcontract::checkwithrv( name nm ) {
 }
 ```
 
-For a complete example of a smart contract that implements an action which returns a value see the [hello example smart contract](https://github.com/EOSIO/eosio.cdt/blob/develop/examples/hello/src/hello.cpp#L16).
+For a complete example of a smart contract that implements an action which returns a value see the [hello example smart contract](https://github.com/DCD/dcd.cdt/blob/develop/examples/hello/src/hello.cpp#L16).
 
 ## Next Steps
 
-* Compile the smart contract and deploy it to the EOSIO testnet or any EOSIO based blockchain.
-* Use the `cleos` command to send the `checkwithrv` action to the smart contract and observe the returned value in the `cleos` output.
+* Compile the smart contract and deploy it to the DCD testnet or any DCD based blockchain.
+* Use the `cldcd` command to send the `checkwithrv` action to the smart contract and observe the returned value in the `cldcd` output.
 * Use other means (e.g. programmatically) to send the  `checkwithrv` action to the smart contract and observe the returned value in the action trace.
 
 [[info | Returned values from actions availability]]

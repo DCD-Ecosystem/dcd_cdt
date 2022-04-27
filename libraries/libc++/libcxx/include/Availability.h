@@ -55,7 +55,7 @@
     
     For these macros to function properly, a program must specify the OS version range 
     it is targeting.  The min OS version is specified as an option to the compiler:
-    -mmacosx-version-min=10.x when building for Mac OS X, and -miphoneos-version-min=y.z
+    -mmacosx-version-min=10.x when building for Mac OS X, and -miphondcd-version-min=y.z
     when building for the iPhone.  The upper bound for the OS version is rarely needed,
     but it can be set on the command line via: -D__MAC_OS_X_VERSION_MAX_ALLOWED=10x0 for
     Mac OS X and __IPHONE_OS_VERSION_MAX_ALLOWED = y0z00 for iOS.  
@@ -390,10 +390,10 @@
  * support the following target selection options:
  *
  * -mmacosx-version-min
- * -miphoneos-version-min
+ * -miphondcd-version-min
  * -mwatchos-version-min
  * -mtvos-version-min
- * -mbridgeos-version-min
+ * -mbridgdcd-version-min
  */
 
 #if defined(__has_feature) && defined(__has_attribute)

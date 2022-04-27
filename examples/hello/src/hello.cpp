@@ -1,18 +1,18 @@
 #include <hello.hpp>
 
-[[eosio::action]]
+[[dcd::action]]
 void hello::hi( name nm ) {
    print_f("Name : %\n", nm);
 }
 
-[[eosio::action]]
+[[dcd::action]]
 void hello::check( name nm ) {
    print_f("Name : %\n", nm);
-   eosio::check(nm == "hello"_n, "check name not equal to `hello`");
+   dcd::check(nm == "hello"_n, "check name not equal to `hello`");
 }
 
 // Checks the input param `nm` and returns serialized std::pair<int, std::string> instance.
-[[eosio::action]]
+[[dcd::action]]
 std::pair<int, std::string> hello::checkwithrv( name nm ) {
    print_f("Name : %\n", nm);
 

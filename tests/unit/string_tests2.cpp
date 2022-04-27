@@ -1,608 +1,608 @@
 /**
  *  @file
- *  @copyright defined in eosio.cdt/LICENSE.txt
+ *  @copyright defined in dcd.cdt/LICENSE.txt
  */
 
-#include <eosio/tester.hpp>
-#include <eosio/datastream.hpp>
-#include <eosio/string.hpp>
+#include <dcd/tester.hpp>
+#include <dcd/datastream.hpp>
+#include <dcd/string.hpp>
 
 using std::fill;
 using std::move;
 
-using eosio::datastream;
-using eosio::string;
+using dcd::datastream;
+using dcd::string;
 
-// Definitions found in `eosio.cdt/libraries/eosiolib/core/eosio/string.hpp`
+// Definitions found in `dcd.cdt/libraries/dcdlib/core/dcd/string.hpp`
 
-EOSIO_TEST_BEGIN(string_test_ins_null)
-   string eostr{"abcdefg"};
+DCD_TEST_BEGIN(string_test_ins_null)
+   string dcdtr{"abcdefg"};
    const char* null_man{nullptr};
-   CHECK_ASSERT( "eosio::string::insert", [&]() {eostr.insert(0, null_man, 1);} )
-   CHECK_ASSERT( "eosio::string::insert", [&]() {eostr.insert(-1, "ooo", 1);} )
-EOSIO_TEST_END
+   CHECK_ASSERT( "dcd::string::insert", [&]() {dcdtr.insert(0, null_man, 1);} )
+   CHECK_ASSERT( "dcd::string::insert", [&]() {dcdtr.insert(-1, "ooo", 1);} )
+DCD_TEST_END
 
 //// string& insert(const size_t pos, const string& str)
-EOSIO_TEST_BEGIN(string_test_ins_to_blank)
-   string eostr{};
+DCD_TEST_BEGIN(string_test_ins_to_blank)
+   string dcdtr{};
    const string str{"ooo"};
-   eostr.insert(0, str);
-   CHECK_EQUAL( eostr.size(), 3 )
-   CHECK_EQUAL( eostr.capacity(), 6 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "ooo"), 0 )
-EOSIO_TEST_END
+   dcdtr.insert(0, str);
+   CHECK_EQUAL( dcdtr.size(), 3 )
+   CHECK_EQUAL( dcdtr.capacity(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "ooo"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_at_bgn_single)
-   string eostr{"abc"};
+DCD_TEST_BEGIN(string_test_ins_at_bgn_single)
+   string dcdtr{"abc"};
    const string str{"d"};
-   eostr.insert(0, str);
-   CHECK_EQUAL( eostr.size(), 4 )
-   CHECK_EQUAL( eostr.capacity(), 8 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "dabc"), 0 )
-EOSIO_TEST_END
+   dcdtr.insert(0, str);
+   CHECK_EQUAL( dcdtr.size(), 4 )
+   CHECK_EQUAL( dcdtr.capacity(), 8 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "dabc"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_at_bgn_mul_1)
-   string eostr{"abc"};
+DCD_TEST_BEGIN(string_test_ins_at_bgn_mul_1)
+   string dcdtr{"abc"};
    const string str{"def"};
-   eostr.insert(0, str);
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( eostr.capacity(), 12 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "defabc"), 0 )
-EOSIO_TEST_END
+   dcdtr.insert(0, str);
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( dcdtr.capacity(), 12 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "defabc"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_at_bgn_mul_2)
-   string eostr{"iii"};
+DCD_TEST_BEGIN(string_test_ins_at_bgn_mul_2)
+   string dcdtr{"iii"};
    const string str{"ooo"};
-   eostr.insert(0, str);
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( eostr.capacity(), 12 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "oooiii") , 0 )
-EOSIO_TEST_END
+   dcdtr.insert(0, str);
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( dcdtr.capacity(), 12 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "oooiii") , 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_in_middle_1)
-   string eostr{"iii"};
+DCD_TEST_BEGIN(string_test_ins_in_middle_1)
+   string dcdtr{"iii"};
    const string str{"ooo"};
-   eostr.insert(1, str);
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( eostr.capacity(), 12 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "ioooii") , 0 )
-EOSIO_TEST_END
+   dcdtr.insert(1, str);
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( dcdtr.capacity(), 12 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "ioooii") , 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_in_middle_2)
-   string eostr{"iii"};
+DCD_TEST_BEGIN(string_test_ins_in_middle_2)
+   string dcdtr{"iii"};
    const string str{"ooo"};
-   eostr.insert(2, str);
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( eostr.capacity(), 12 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "iioooi") , 0 )
-EOSIO_TEST_END
+   dcdtr.insert(2, str);
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( dcdtr.capacity(), 12 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "iioooi") , 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_at_end)
-   string eostr{"iii"};
+DCD_TEST_BEGIN(string_test_ins_at_end)
+   string dcdtr{"iii"};
    const string str{"ooo"};
-   eostr.insert(3, str);
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( eostr.capacity(), 12 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "iiiooo") , 0 )
-EOSIO_TEST_END
+   dcdtr.insert(3, str);
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( dcdtr.capacity(), 12 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "iiiooo") , 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_neg_index_1)
-   string eostr{"abcdefg"};
+DCD_TEST_BEGIN(string_test_ins_neg_index_1)
+   string dcdtr{"abcdefg"};
    const string str{"ooo"};
-   CHECK_ASSERT( "eosio::string::insert", [&]() {eostr.insert(-1, str);} )
-EOSIO_TEST_END
+   CHECK_ASSERT( "dcd::string::insert", [&]() {dcdtr.insert(-1, str);} )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_op_pl_1)
-   string eostr{""};
+DCD_TEST_BEGIN(string_test_ins_op_pl_1)
+   string dcdtr{""};
    string str{""};
    str += "ooo";
-   eostr.insert(0, str);
-   CHECK_EQUAL( eostr.size(), 3 )
-   CHECK_EQUAL( eostr.capacity(), 6 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "ooo"), 0 )
-EOSIO_TEST_END
+   dcdtr.insert(0, str);
+   CHECK_EQUAL( dcdtr.size(), 3 )
+   CHECK_EQUAL( dcdtr.capacity(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "ooo"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_op_pl_2)
-   string eostr{""};
-   eostr += "abc";
+DCD_TEST_BEGIN(string_test_ins_op_pl_2)
+   string dcdtr{""};
+   dcdtr += "abc";
    string str{""};
    str += "d";
-   eostr.insert(0, str);
-   CHECK_EQUAL( eostr.size(), 4 )
-   CHECK_EQUAL( eostr.capacity(), 6 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "dabc"), 0 )
-EOSIO_TEST_END
+   dcdtr.insert(0, str);
+   CHECK_EQUAL( dcdtr.size(), 4 )
+   CHECK_EQUAL( dcdtr.capacity(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "dabc"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_op_pl_3)
-   string eostr{""};
-   eostr += "abc";
+DCD_TEST_BEGIN(string_test_ins_op_pl_3)
+   string dcdtr{""};
+   dcdtr += "abc";
    string str{""};
    str += "def";
-   eostr.insert(0, str);
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( eostr.capacity(), 6 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "defabc"), 0 )
-EOSIO_TEST_END
+   dcdtr.insert(0, str);
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( dcdtr.capacity(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "defabc"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_op_pl_4)
-   string eostr{""};
-   eostr += "iii";
+DCD_TEST_BEGIN(string_test_ins_op_pl_4)
+   string dcdtr{""};
+   dcdtr += "iii";
    string str{""};
    str += "ooo";
-   eostr.insert(0, str);
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( eostr.capacity(), 6 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "oooiii") , 0 )
-EOSIO_TEST_END
+   dcdtr.insert(0, str);
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( dcdtr.capacity(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "oooiii") , 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_op_pl_5)
-   string eostr{""};
-   eostr += "iii";
+DCD_TEST_BEGIN(string_test_ins_op_pl_5)
+   string dcdtr{""};
+   dcdtr += "iii";
    string str{""};
    str += "ooo";
-   eostr.insert(1, str);
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( eostr.capacity(), 6 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "ioooii") , 0 )
-EOSIO_TEST_END
+   dcdtr.insert(1, str);
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( dcdtr.capacity(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "ioooii") , 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_op_pl_6)
-   string eostr{""};
-   eostr += "iii";
+DCD_TEST_BEGIN(string_test_ins_op_pl_6)
+   string dcdtr{""};
+   dcdtr += "iii";
    string str{""};
    str += "ooo";
-   eostr.insert(2, str);
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( eostr.capacity(), 6 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "iioooi") , 0 )
-EOSIO_TEST_END
+   dcdtr.insert(2, str);
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( dcdtr.capacity(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "iioooi") , 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_op_pl_7)
-   string eostr{""};
-   eostr += "iii";
+DCD_TEST_BEGIN(string_test_ins_op_pl_7)
+   string dcdtr{""};
+   dcdtr += "iii";
    string str{""};
    str += "ooo";
-   eostr.insert(3, str);
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( eostr.capacity(), 6 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "iiiooo") , 0 )
-EOSIO_TEST_END
+   dcdtr.insert(3, str);
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( dcdtr.capacity(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "iiiooo") , 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_neg_index_2)
-   string eostr{"abcdefg"};
+DCD_TEST_BEGIN(string_test_ins_neg_index_2)
+   string dcdtr{"abcdefg"};
    string str{"ooo"};
-   CHECK_ASSERT( "eosio::string::insert", [&]() {eostr.insert(-1, str);} )
-EOSIO_TEST_END
+   CHECK_ASSERT( "dcd::string::insert", [&]() {dcdtr.insert(-1, str);} )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_ins_capacity)
-   string eostr = "hello";
-   eostr.insert(0, "0", 1); /// `_capacity` is now 12; `_begin` now holds `std::unique_ptr<char[]>`
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( eostr.capacity(), 12 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "0hello") , 0 )
+DCD_TEST_BEGIN(string_test_ins_capacity)
+   string dcdtr = "hello";
+   dcdtr.insert(0, "0", 1); /// `_capacity` is now 12; `_begin` now holds `std::unique_ptr<char[]>`
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( dcdtr.capacity(), 12 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "0hello") , 0 )
 
-   eostr.insert(0, "h", 1);
-   CHECK_EQUAL( eostr.size(), 7 )
-   CHECK_EQUAL( eostr.capacity(), 12 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "h0hello") , 0 )
-EOSIO_TEST_END
+   dcdtr.insert(0, "h", 1);
+   CHECK_EQUAL( dcdtr.size(), 7 )
+   CHECK_EQUAL( dcdtr.capacity(), 12 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "h0hello") , 0 )
+DCD_TEST_END
 
 //// string& erase(size_t pos = 0, size_t len = npos)
-EOSIO_TEST_BEGIN(string_test_erase)
-   string eostr{"abcdefgh"};
-   eostr.erase();
-   CHECK_EQUAL( eostr.size(), 0 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), ""), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase)
+   string dcdtr{"abcdefgh"};
+   dcdtr.erase();
+   CHECK_EQUAL( dcdtr.size(), 0 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), ""), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_at_zero)
-   string eostr{"abcdefgh"};
-   eostr.erase(0);
-   CHECK_EQUAL( eostr.size(), 0 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), ""), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_at_zero)
+   string dcdtr{"abcdefgh"};
+   dcdtr.erase(0);
+   CHECK_EQUAL( dcdtr.size(), 0 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), ""), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_to_npos)
-   string eostr{"abcdefgh"};
-   eostr.erase(0, string::npos);
-   CHECK_EQUAL( eostr.size(), 0 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), ""), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_to_npos)
+   string dcdtr{"abcdefgh"};
+   dcdtr.erase(0, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 0 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), ""), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_1)
-   string eostr{"abcdefgh"};
-   eostr.erase(1, string::npos);
-   CHECK_EQUAL( eostr.size(), 1 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "a"), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_1)
+   string dcdtr{"abcdefgh"};
+   dcdtr.erase(1, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 1 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "a"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_2)
-   string eostr{"abcdefgh"};
-   eostr.erase(2, string::npos);
-   CHECK_EQUAL( eostr.size(), 2 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "ab"), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_2)
+   string dcdtr{"abcdefgh"};
+   dcdtr.erase(2, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 2 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "ab"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_3)
-   string eostr{"abcdefgh"};
-   eostr.erase(3, string::npos);
-   CHECK_EQUAL( eostr.size(), 3 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abc"), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_3)
+   string dcdtr{"abcdefgh"};
+   dcdtr.erase(3, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 3 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abc"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_4)
-   string eostr{"abcdefgh"};
-   eostr.erase(4, string::npos);
-   CHECK_EQUAL( eostr.size(), 4 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcd"), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_4)
+   string dcdtr{"abcdefgh"};
+   dcdtr.erase(4, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 4 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcd"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_5)
-   string eostr{"abcdefgh"};
-   eostr.erase(5, string::npos);
-   CHECK_EQUAL( eostr.size(), 5 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcde"), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_5)
+   string dcdtr{"abcdefgh"};
+   dcdtr.erase(5, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 5 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcde"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_6)
-   string eostr{"abcdefgh"};
-   eostr.erase(6, string::npos);
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcdef"), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_6)
+   string dcdtr{"abcdefgh"};
+   dcdtr.erase(6, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcdef"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_7)
-   string eostr{"abcdefgh"};
-   eostr.erase(7, string::npos);
-   CHECK_EQUAL( eostr.size(), 7 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcdefg"), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_7)
+   string dcdtr{"abcdefgh"};
+   dcdtr.erase(7, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 7 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcdefg"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_8)
-   string eostr{"abcdefgh"};
-   eostr.erase(8, string::npos);
-   CHECK_EQUAL( eostr.size(), 8 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcdefgh"), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_8)
+   string dcdtr{"abcdefgh"};
+   dcdtr.erase(8, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 8 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcdefgh"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_8_len_0)
-   string eostr{"abcdefgh"};
-   eostr.erase(8, 0);
-   CHECK_EQUAL( eostr.size(), 8 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcdefgh"), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_8_len_0)
+   string dcdtr{"abcdefgh"};
+   dcdtr.erase(8, 0);
+   CHECK_EQUAL( dcdtr.size(), 8 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcdefgh"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_neg_index_1)
-   string eostr{"abcdefg"};
-   CHECK_ASSERT( "eosio::string::erase", [&]() {eostr.erase(-1, 1);} )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_neg_index_1)
+   string dcdtr{"abcdefg"};
+   CHECK_ASSERT( "dcd::string::erase", [&]() {dcdtr.erase(-1, 1);} )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_op_pl)
-   string eostr{""};
-   eostr += "abcdefgh";
+DCD_TEST_BEGIN(string_test_erase_op_pl)
+   string dcdtr{""};
+   dcdtr += "abcdefgh";
 
-   eostr.erase();
-   CHECK_EQUAL( eostr.size(), 0 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), ""), 0 )
-EOSIO_TEST_END
+   dcdtr.erase();
+   CHECK_EQUAL( dcdtr.size(), 0 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), ""), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_at_0_op_pl)
-   string eostr{""};
-   eostr += "abcdefgh";
+DCD_TEST_BEGIN(string_test_erase_at_0_op_pl)
+   string dcdtr{""};
+   dcdtr += "abcdefgh";
 
-   eostr.erase(0);
-   CHECK_EQUAL( eostr.size(), 0 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), ""), 0 )
-EOSIO_TEST_END
+   dcdtr.erase(0);
+   CHECK_EQUAL( dcdtr.size(), 0 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), ""), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_at_0_op_pl_npos)
-   string eostr{""};
-   eostr += "abcdefgh";
+DCD_TEST_BEGIN(string_test_erase_at_0_op_pl_npos)
+   string dcdtr{""};
+   dcdtr += "abcdefgh";
 
-   eostr.erase(0, string::npos);
-   CHECK_EQUAL( eostr.size(), 0 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), ""), 0 )
-EOSIO_TEST_END
+   dcdtr.erase(0, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 0 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), ""), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_1_op_pl)
-   string eostr{""};
-   eostr += "abcdefgh";
+DCD_TEST_BEGIN(string_test_erase_1_op_pl)
+   string dcdtr{""};
+   dcdtr += "abcdefgh";
 
-   eostr.erase(1, string::npos);
-   CHECK_EQUAL( eostr.size(), 1 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "a"), 0 )
-EOSIO_TEST_END
+   dcdtr.erase(1, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 1 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "a"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_2_op_pl)
-   string eostr{""};
-   eostr += "abcdefgh";
+DCD_TEST_BEGIN(string_test_erase_2_op_pl)
+   string dcdtr{""};
+   dcdtr += "abcdefgh";
 
-   eostr.erase(2, string::npos);
-   CHECK_EQUAL( eostr.size(), 2 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "ab"), 0 )
-EOSIO_TEST_END
+   dcdtr.erase(2, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 2 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "ab"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_3_op_pl)
-   string eostr{""};
-   eostr += "abcdefgh";
+DCD_TEST_BEGIN(string_test_erase_3_op_pl)
+   string dcdtr{""};
+   dcdtr += "abcdefgh";
 
-   eostr.erase(3, string::npos);
-   CHECK_EQUAL( eostr.size(), 3 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abc"), 0 )
-EOSIO_TEST_END
+   dcdtr.erase(3, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 3 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abc"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_4_op_pl)
-   string eostr{""};
-   eostr += "abcdefgh";
+DCD_TEST_BEGIN(string_test_erase_4_op_pl)
+   string dcdtr{""};
+   dcdtr += "abcdefgh";
 
-   eostr.erase(4, string::npos);
-   CHECK_EQUAL( eostr.size(), 4 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcd"), 0 )
-EOSIO_TEST_END
+   dcdtr.erase(4, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 4 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcd"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_5_op_pl)
-   string eostr{""};
-   eostr += "abcdefgh";
+DCD_TEST_BEGIN(string_test_erase_5_op_pl)
+   string dcdtr{""};
+   dcdtr += "abcdefgh";
 
-   eostr.erase(5, string::npos);
-   CHECK_EQUAL( eostr.size(), 5 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcde"), 0 )
-EOSIO_TEST_END
+   dcdtr.erase(5, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 5 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcde"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_6_op_pl)
-   string eostr{""};
-   eostr += "abcdefgh";
+DCD_TEST_BEGIN(string_test_erase_6_op_pl)
+   string dcdtr{""};
+   dcdtr += "abcdefgh";
 
-   eostr.erase(6, string::npos);
-   CHECK_EQUAL( eostr.size(), 6 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcdef"), 0 )
-EOSIO_TEST_END
+   dcdtr.erase(6, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcdef"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_7_op_pl)
-   string eostr{""};
-   eostr += "abcdefgh";
+DCD_TEST_BEGIN(string_test_erase_7_op_pl)
+   string dcdtr{""};
+   dcdtr += "abcdefgh";
 
-   eostr.erase(7, string::npos);
-   CHECK_EQUAL( eostr.size(), 7 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcdefg"), 0 )
-EOSIO_TEST_END
+   dcdtr.erase(7, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 7 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcdefg"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_8_op_pl)
-   string eostr{""};
-   eostr += "abcdefgh";
+DCD_TEST_BEGIN(string_test_erase_8_op_pl)
+   string dcdtr{""};
+   dcdtr += "abcdefgh";
 
-   eostr.erase(8, string::npos);
-   CHECK_EQUAL( eostr.size(), 8 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcdefgh"), 0 )
-EOSIO_TEST_END
+   dcdtr.erase(8, string::npos);
+   CHECK_EQUAL( dcdtr.size(), 8 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcdefgh"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_at_8_op_pl)
-   string eostr{""};
-   eostr += "abcdefgh";
+DCD_TEST_BEGIN(string_test_erase_at_8_op_pl)
+   string dcdtr{""};
+   dcdtr += "abcdefgh";
 
-   eostr.erase(8, 0);
-   CHECK_EQUAL( eostr.size(), 8 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcdefgh"), 0 )
-EOSIO_TEST_END
+   dcdtr.erase(8, 0);
+   CHECK_EQUAL( dcdtr.size(), 8 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcdefgh"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_erase_neg_index_2)
-   string eostr{"abcdefg"};
-   CHECK_ASSERT( "eosio::string::erase", [&]() {eostr.erase(-1, 1);} )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_erase_neg_index_2)
+   string dcdtr{"abcdefg"};
+   CHECK_ASSERT( "dcd::string::erase", [&]() {dcdtr.erase(-1, 1);} )
+DCD_TEST_END
 
 //// string& append(const char* str)
-EOSIO_TEST_BEGIN(string_test_append_to_blank_1)
-   string eostr{};
+DCD_TEST_BEGIN(string_test_append_to_blank_1)
+   string dcdtr{};
    const char* str{"iii"};
-   eostr.append(str);
-   CHECK_EQUAL( eostr.size(), 3 )
-   CHECK_EQUAL( eostr.capacity(), 6 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "iii"), 0 )
-EOSIO_TEST_END
+   dcdtr.append(str);
+   CHECK_EQUAL( dcdtr.size(), 3 )
+   CHECK_EQUAL( dcdtr.capacity(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "iii"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_append_1)
-   string eostr{"abcdefg"};
+DCD_TEST_BEGIN(string_test_append_1)
+   string dcdtr{"abcdefg"};
    const char* str{"iii"};
-   eostr.append(str);
-   CHECK_EQUAL( eostr.size(), 10 )
-   CHECK_EQUAL( eostr.capacity(), 20 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcdefgiii"), 0 )
-EOSIO_TEST_END
+   dcdtr.append(str);
+   CHECK_EQUAL( dcdtr.size(), 10 )
+   CHECK_EQUAL( dcdtr.capacity(), 20 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcdefgiii"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_append_null)
-   string eostr{"abcdefg"};
+DCD_TEST_BEGIN(string_test_append_null)
+   string dcdtr{"abcdefg"};
    const char* null_man{nullptr};
-   CHECK_ASSERT( "eosio::string::append", [&]() {eostr.append(null_man);} )
-EOSIO_TEST_END
+   CHECK_ASSERT( "dcd::string::append", [&]() {dcdtr.append(null_man);} )
+DCD_TEST_END
 
 //// string& append(const string& str)
-EOSIO_TEST_BEGIN(string_test_append_to_blank_2)
-   string eostr{};
+DCD_TEST_BEGIN(string_test_append_to_blank_2)
+   string dcdtr{};
    const string str{"iii"};
-   eostr.append(str);
-   CHECK_EQUAL( eostr.size(), 3 )
-   CHECK_EQUAL( eostr.capacity(), 6 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "iii"), 0 )
-EOSIO_TEST_END
+   dcdtr.append(str);
+   CHECK_EQUAL( dcdtr.size(), 3 )
+   CHECK_EQUAL( dcdtr.capacity(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "iii"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_append_2)
-   string eostr{"abcdefg"};
+DCD_TEST_BEGIN(string_test_append_2)
+   string dcdtr{"abcdefg"};
    const string str{"iii"};
-   eostr.append(str);
-   CHECK_EQUAL( eostr.size(), 10 )
-   CHECK_EQUAL( eostr.capacity(), 20 )
-   CHECK_EQUAL( strcmp(eostr.c_str(), "abcdefgiii"), 0 )
-EOSIO_TEST_END
+   dcdtr.append(str);
+   CHECK_EQUAL( dcdtr.size(), 10 )
+   CHECK_EQUAL( dcdtr.capacity(), 20 )
+   CHECK_EQUAL( strcmp(dcdtr.c_str(), "abcdefgiii"), 0 )
+DCD_TEST_END
 
 //// string& operator+=(const char c)
-EOSIO_TEST_BEGIN(string_test_append_3)
-   string eostr0{};
-   string eostr1{"a"};
-   string eostr2{"abcdef"};
+DCD_TEST_BEGIN(string_test_append_3)
+   string dcdtr0{};
+   string dcdtr1{"a"};
+   string dcdtr2{"abcdef"};
 
-   eostr0 += 'c';
-   CHECK_EQUAL( eostr0.size(), 1 )
-   CHECK_EQUAL( eostr0.capacity(), 2 )
-   CHECK_EQUAL( strcmp(eostr0.c_str(), "c"), 0 )
+   dcdtr0 += 'c';
+   CHECK_EQUAL( dcdtr0.size(), 1 )
+   CHECK_EQUAL( dcdtr0.capacity(), 2 )
+   CHECK_EQUAL( strcmp(dcdtr0.c_str(), "c"), 0 )
 
-   eostr1 += 'c';
-   eostr1 += 'c';
-   CHECK_EQUAL( eostr1.size(), 3 )
-   CHECK_EQUAL( eostr1.capacity(), 4 )
-   CHECK_EQUAL( strcmp(eostr1.c_str(), "acc"), 0 )
+   dcdtr1 += 'c';
+   dcdtr1 += 'c';
+   CHECK_EQUAL( dcdtr1.size(), 3 )
+   CHECK_EQUAL( dcdtr1.capacity(), 4 )
+   CHECK_EQUAL( strcmp(dcdtr1.c_str(), "acc"), 0 )
 
-   eostr2 += 'c';
-   CHECK_EQUAL( eostr2.size(), 7 )
-   CHECK_EQUAL( eostr2.capacity(), 14 )
-   CHECK_EQUAL( strcmp(eostr2.c_str(), "abcdefc"), 0 )
-EOSIO_TEST_END
+   dcdtr2 += 'c';
+   CHECK_EQUAL( dcdtr2.size(), 7 )
+   CHECK_EQUAL( dcdtr2.capacity(), 14 )
+   CHECK_EQUAL( strcmp(dcdtr2.c_str(), "abcdefc"), 0 )
+DCD_TEST_END
 
 //// string& operator+=(const char* rhs)
-EOSIO_TEST_BEGIN(string_test_append_op_pl_1)
-   string eostr0{};
-   string eostr1{"a"};
-   string eostr2{"abcdef"};
-   string eostr3{"abcdef"};
+DCD_TEST_BEGIN(string_test_append_op_pl_1)
+   string dcdtr0{};
+   string dcdtr1{"a"};
+   string dcdtr2{"abcdef"};
+   string dcdtr3{"abcdef"};
 
-   eostr0 += "c";
-   CHECK_EQUAL( eostr0.size(), 1 )
-   CHECK_EQUAL( eostr0.capacity(), 2 )
-   CHECK_EQUAL( strcmp(eostr0.c_str(), "c"), 0 )
+   dcdtr0 += "c";
+   CHECK_EQUAL( dcdtr0.size(), 1 )
+   CHECK_EQUAL( dcdtr0.capacity(), 2 )
+   CHECK_EQUAL( strcmp(dcdtr0.c_str(), "c"), 0 )
 
-   eostr1 += "c";
-   eostr1 += "c";
-   CHECK_EQUAL( eostr1.size(), 3 )
-   CHECK_EQUAL( eostr1.capacity(), 4 )
-   CHECK_EQUAL( strcmp(eostr1.c_str(), "acc"), 0 )
+   dcdtr1 += "c";
+   dcdtr1 += "c";
+   CHECK_EQUAL( dcdtr1.size(), 3 )
+   CHECK_EQUAL( dcdtr1.capacity(), 4 )
+   CHECK_EQUAL( strcmp(dcdtr1.c_str(), "acc"), 0 )
 
-   eostr2 += "c";
-   CHECK_EQUAL( eostr2.size(), 7 )
-   CHECK_EQUAL( eostr2.capacity(), 14 )
-   CHECK_EQUAL( strcmp(eostr2.c_str(), "abcdefc"), 0 )
+   dcdtr2 += "c";
+   CHECK_EQUAL( dcdtr2.size(), 7 )
+   CHECK_EQUAL( dcdtr2.capacity(), 14 )
+   CHECK_EQUAL( strcmp(dcdtr2.c_str(), "abcdefc"), 0 )
 
-   eostr3 += "ghijklm";
-   CHECK_EQUAL( eostr3.size(), 13 )
-   CHECK_EQUAL( eostr3.capacity(), 26 )
-   CHECK_EQUAL( strcmp(eostr3.c_str(), "abcdefghijklm"), 0 )
-EOSIO_TEST_END
+   dcdtr3 += "ghijklm";
+   CHECK_EQUAL( dcdtr3.size(), 13 )
+   CHECK_EQUAL( dcdtr3.capacity(), 26 )
+   CHECK_EQUAL( strcmp(dcdtr3.c_str(), "abcdefghijklm"), 0 )
+DCD_TEST_END
 
 //// string& operator+=(const string& rhs)
-EOSIO_TEST_BEGIN(string_test_append_op_pl_2)
-   string eostr0{};
-   string eostr1{"a"};
-   string eostr2{"abcdef"};
-   string eostr3{"abcdef"};
+DCD_TEST_BEGIN(string_test_append_op_pl_2)
+   string dcdtr0{};
+   string dcdtr1{"a"};
+   string dcdtr2{"abcdef"};
+   string dcdtr3{"abcdef"};
 
-   eostr0 += string{"c"};
-   CHECK_EQUAL( eostr0.size(), 1 )
-   CHECK_EQUAL( eostr0.capacity(), 2 )
-   CHECK_EQUAL( strcmp(eostr0.c_str(), "c"), 0 )
+   dcdtr0 += string{"c"};
+   CHECK_EQUAL( dcdtr0.size(), 1 )
+   CHECK_EQUAL( dcdtr0.capacity(), 2 )
+   CHECK_EQUAL( strcmp(dcdtr0.c_str(), "c"), 0 )
 
-   eostr1 += string{"c"};
-   eostr1 += string{"c"};
-   CHECK_EQUAL( eostr1.size(), 3 )
-   CHECK_EQUAL( eostr1.capacity(), 4 )
-   CHECK_EQUAL( strcmp(eostr1.c_str(), "acc"), 0 )
+   dcdtr1 += string{"c"};
+   dcdtr1 += string{"c"};
+   CHECK_EQUAL( dcdtr1.size(), 3 )
+   CHECK_EQUAL( dcdtr1.capacity(), 4 )
+   CHECK_EQUAL( strcmp(dcdtr1.c_str(), "acc"), 0 )
 
-   eostr2 += string{"c"};
-   CHECK_EQUAL( eostr2.size(), 7 )
-   CHECK_EQUAL( eostr2.capacity(), 14 )
-   CHECK_EQUAL( strcmp(eostr2.c_str(), "abcdefc"), 0 )
+   dcdtr2 += string{"c"};
+   CHECK_EQUAL( dcdtr2.size(), 7 )
+   CHECK_EQUAL( dcdtr2.capacity(), 14 )
+   CHECK_EQUAL( strcmp(dcdtr2.c_str(), "abcdefc"), 0 )
 
-   eostr3 += string{"ghijklm"};
-   CHECK_EQUAL( eostr3.size(), 13 )
-   CHECK_EQUAL( eostr3.capacity(), 26 )
-   CHECK_EQUAL( strcmp(eostr3.c_str(), "abcdefghijklm"), 0 )
-EOSIO_TEST_END
+   dcdtr3 += string{"ghijklm"};
+   CHECK_EQUAL( dcdtr3.size(), 13 )
+   CHECK_EQUAL( dcdtr3.capacity(), 26 )
+   CHECK_EQUAL( strcmp(dcdtr3.c_str(), "abcdefghijklm"), 0 )
+DCD_TEST_END
 
 //// string& operator+=(const string& s)
-EOSIO_TEST_BEGIN(string_test_append_op_pl_3)
-   string eostr0{"a"};
-   string eostr1{"b"};
-   CHECK_EQUAL( eostr0.size(), 1 )
-   eostr0 += eostr1;
-   CHECK_EQUAL( eostr0.size(), 2 )
-   CHECK_EQUAL( strcmp(eostr0.c_str(), "ab"), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_append_op_pl_3)
+   string dcdtr0{"a"};
+   string dcdtr1{"b"};
+   CHECK_EQUAL( dcdtr0.size(), 1 )
+   dcdtr0 += dcdtr1;
+   CHECK_EQUAL( dcdtr0.size(), 2 )
+   CHECK_EQUAL( strcmp(dcdtr0.c_str(), "ab"), 0 )
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_append_op_pl_4)
-   string eostr0{"abc"};
-   string eostr1{"def"};
-   CHECK_EQUAL( eostr0.size(), 3 )
-   eostr0 += eostr1;
-   CHECK_EQUAL( eostr0.size(), 6 )
-   CHECK_EQUAL( strcmp(eostr0.c_str(), "abcdef"), 0 )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_append_op_pl_4)
+   string dcdtr0{"abc"};
+   string dcdtr1{"def"};
+   CHECK_EQUAL( dcdtr0.size(), 3 )
+   dcdtr0 += dcdtr1;
+   CHECK_EQUAL( dcdtr0.size(), 6 )
+   CHECK_EQUAL( strcmp(dcdtr0.c_str(), "abcdef"), 0 )
+DCD_TEST_END
 
-//// inline void print(eosio::string str)
-EOSIO_TEST_BEGIN(string_test_print)
-   const string eostr0{""};
-   const string eostr1{"abc"};
-   const string eostr2{"abcdef"};
+//// inline void print(dcd::string str)
+DCD_TEST_BEGIN(string_test_print)
+   const string dcdtr0{""};
+   const string dcdtr1{"abc"};
+   const string dcdtr2{"abcdef"};
 
-   CHECK_PRINT( "", [&](){ print(eostr0); } )
-   CHECK_PRINT( "abc", [&](){ print(eostr1); } )
-   CHECK_PRINT( "abcdef", [&](){ print(eostr2); } )
-EOSIO_TEST_END
+   CHECK_PRINT( "", [&](){ print(dcdtr0); } )
+   CHECK_PRINT( "abc", [&](){ print(dcdtr1); } )
+   CHECK_PRINT( "abcdef", [&](){ print(dcdtr2); } )
+DCD_TEST_END
 
 //// friend bool operator< (const string& lhs, const string& rhs)
-EOSIO_TEST_BEGIN(string_test_less_than)
-   const string eostr0{"abc"};
-   const string eostr1{"def"};
-   CHECK_EQUAL( (eostr0 < eostr0), false )
-   CHECK_EQUAL( (eostr1 < eostr1), false )
-   CHECK_EQUAL( (eostr0 < eostr1), true )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_less_than)
+   const string dcdtr0{"abc"};
+   const string dcdtr1{"def"};
+   CHECK_EQUAL( (dcdtr0 < dcdtr0), false )
+   CHECK_EQUAL( (dcdtr1 < dcdtr1), false )
+   CHECK_EQUAL( (dcdtr0 < dcdtr1), true )
+DCD_TEST_END
 
 //// friend bool operator> (const string& lhs, const string& rhs)
-EOSIO_TEST_BEGIN(string_test_gt)
-   const string eostr0{"abc"};
-   const string eostr1{"def"};
-   CHECK_EQUAL( (eostr0 > eostr0), false )
-   CHECK_EQUAL( (eostr1 > eostr1), false )
-   CHECK_EQUAL( (eostr0 > eostr1), false )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_gt)
+   const string dcdtr0{"abc"};
+   const string dcdtr1{"def"};
+   CHECK_EQUAL( (dcdtr0 > dcdtr0), false )
+   CHECK_EQUAL( (dcdtr1 > dcdtr1), false )
+   CHECK_EQUAL( (dcdtr0 > dcdtr1), false )
+DCD_TEST_END
 
 //// friend bool operator<=(const string& lhs, const string& rhs)
-EOSIO_TEST_BEGIN(string_test_lt_or_eq)
-   const string eostr0{"abc"};
-   const string eostr1{"def"};
-   CHECK_EQUAL( (eostr0 <= eostr0), true )
-   CHECK_EQUAL( (eostr1 <= eostr1), true )
-   CHECK_EQUAL( (eostr0 <= eostr1), true )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_lt_or_eq)
+   const string dcdtr0{"abc"};
+   const string dcdtr1{"def"};
+   CHECK_EQUAL( (dcdtr0 <= dcdtr0), true )
+   CHECK_EQUAL( (dcdtr1 <= dcdtr1), true )
+   CHECK_EQUAL( (dcdtr0 <= dcdtr1), true )
+DCD_TEST_END
 
 //// friend bool operator>=(const string& lhs, const string& rhs)
-EOSIO_TEST_BEGIN(string_test_gt_or_eq)
-   const string eostr0{"abc"};
-   const string eostr1{"def"};
-   CHECK_EQUAL( (eostr0 >= eostr0), true )
-   CHECK_EQUAL( (eostr1 >= eostr1), true )
-   CHECK_EQUAL( (eostr0 >= eostr1), false )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_gt_or_eq)
+   const string dcdtr0{"abc"};
+   const string dcdtr1{"def"};
+   CHECK_EQUAL( (dcdtr0 >= dcdtr0), true )
+   CHECK_EQUAL( (dcdtr1 >= dcdtr1), true )
+   CHECK_EQUAL( (dcdtr0 >= dcdtr1), false )
+DCD_TEST_END
 
 //// friend bool operator==(const string& lhs, const string& rhs)
-EOSIO_TEST_BEGIN(string_test_equal)
-   const string eostr0{"abc"};
-   const string eostr1{"def"};
-   CHECK_EQUAL( (eostr0 == eostr0), true )
-   CHECK_EQUAL( (eostr1 == eostr1), true )
-   CHECK_EQUAL( (eostr0 == eostr1), false )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_equal)
+   const string dcdtr0{"abc"};
+   const string dcdtr1{"def"};
+   CHECK_EQUAL( (dcdtr0 == dcdtr0), true )
+   CHECK_EQUAL( (dcdtr1 == dcdtr1), true )
+   CHECK_EQUAL( (dcdtr0 == dcdtr1), false )
+DCD_TEST_END
 
 //// friend bool operator!=(const string& lhs, const string& rhs)
-EOSIO_TEST_BEGIN(string_test_not_equal)
-   const string eostr0{"abc"};
-   const string eostr1{"def"};
-   CHECK_EQUAL( (eostr0 != eostr0), false )
-   CHECK_EQUAL( (eostr1 != eostr1), false )
-   CHECK_EQUAL( (eostr0 != eostr1), true )
-EOSIO_TEST_END
+DCD_TEST_BEGIN(string_test_not_equal)
+   const string dcdtr0{"abc"};
+   const string dcdtr1{"def"};
+   CHECK_EQUAL( (dcdtr0 != dcdtr0), false )
+   CHECK_EQUAL( (dcdtr1 != dcdtr1), false )
+   CHECK_EQUAL( (dcdtr0 != dcdtr1), true )
+DCD_TEST_END
 
 //// template<typename DataStream>
 //// DataStream& operator<<(DataStream& ds, const string& str)
 //// DataStream& operator>>(DataStream& ds, string& str)
-EOSIO_TEST_BEGIN(string_test_stream_io_1)
+DCD_TEST_BEGIN(string_test_stream_io_1)
    constexpr uint16_t buffer_size{256};
    char datastream_buffer[buffer_size]{}; // Buffer for the datastream to point to
    char buffer[buffer_size]; // Buffer to compare `datastream_buffer` with
@@ -616,9 +616,9 @@ EOSIO_TEST_BEGIN(string_test_stream_io_1)
    ds.seekp(0);
    ds >> str;
    CHECK_EQUAL( cstr, str )
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_stream_io_2)
+DCD_TEST_BEGIN(string_test_stream_io_2)
    constexpr uint16_t buffer_size{256};
    char datastream_buffer[buffer_size]{};
    char buffer[buffer_size];
@@ -632,9 +632,9 @@ EOSIO_TEST_BEGIN(string_test_stream_io_2)
    ds.seekp(0);
    ds >> str;
    CHECK_EQUAL( cstr, str )
-EOSIO_TEST_END
+DCD_TEST_END
 
-EOSIO_TEST_BEGIN(string_test_stream_io_3)
+DCD_TEST_BEGIN(string_test_stream_io_3)
    constexpr uint16_t buffer_size{256};
    char datastream_buffer[buffer_size]{};
    char buffer[buffer_size];
@@ -648,7 +648,7 @@ EOSIO_TEST_BEGIN(string_test_stream_io_3)
    ds.seekp(0);
    ds >> str;
    CHECK_EQUAL( cstr, str )
-EOSIO_TEST_END
+DCD_TEST_END
 
 int main(int argc, char* argv[]) {
    bool verbose = false;
@@ -657,70 +657,70 @@ int main(int argc, char* argv[]) {
    }
    silence_output(!verbose);
 
-   EOSIO_TEST(string_test_ins_null)
-   EOSIO_TEST(string_test_ins_to_blank)
-   EOSIO_TEST(string_test_ins_at_bgn_single)
-   EOSIO_TEST(string_test_ins_at_bgn_mul_1)
-   EOSIO_TEST(string_test_ins_at_bgn_mul_2)
-   EOSIO_TEST(string_test_ins_in_middle_1)
-   EOSIO_TEST(string_test_ins_in_middle_2)
-   EOSIO_TEST(string_test_ins_at_end)
-   EOSIO_TEST(string_test_ins_neg_index_1)
-   EOSIO_TEST(string_test_ins_op_pl_1)
-   EOSIO_TEST(string_test_ins_op_pl_2)
-   EOSIO_TEST(string_test_ins_op_pl_3)
-   EOSIO_TEST(string_test_ins_op_pl_4)
-   EOSIO_TEST(string_test_ins_op_pl_5)
-   EOSIO_TEST(string_test_ins_op_pl_6)
-   EOSIO_TEST(string_test_ins_op_pl_7)
-   EOSIO_TEST(string_test_ins_neg_index_2)
-   EOSIO_TEST(string_test_ins_capacity)
-   EOSIO_TEST(string_test_erase)
-   EOSIO_TEST(string_test_erase_at_zero)
-   EOSIO_TEST(string_test_erase_to_npos)
-   EOSIO_TEST(string_test_erase_1)
-   EOSIO_TEST(string_test_erase_2)
-   EOSIO_TEST(string_test_erase_3)
-   EOSIO_TEST(string_test_erase_4)
-   EOSIO_TEST(string_test_erase_5)
-   EOSIO_TEST(string_test_erase_6)
-   EOSIO_TEST(string_test_erase_7)
-   EOSIO_TEST(string_test_erase_8)
-   EOSIO_TEST(string_test_erase_8_len_0)
-   EOSIO_TEST(string_test_erase_neg_index_1)
-   EOSIO_TEST(string_test_erase_op_pl)
-   EOSIO_TEST(string_test_erase_at_0_op_pl)
-   EOSIO_TEST(string_test_erase_at_0_op_pl_npos)
-   EOSIO_TEST(string_test_erase_1_op_pl)
-   EOSIO_TEST(string_test_erase_2_op_pl)
-   EOSIO_TEST(string_test_erase_3_op_pl)
-   EOSIO_TEST(string_test_erase_4_op_pl)
-   EOSIO_TEST(string_test_erase_5_op_pl)
-   EOSIO_TEST(string_test_erase_6_op_pl)
-   EOSIO_TEST(string_test_erase_7_op_pl)
-   EOSIO_TEST(string_test_erase_8_op_pl)
-   EOSIO_TEST(string_test_erase_at_8_op_pl)
-   EOSIO_TEST(string_test_erase_neg_index_2)
-   EOSIO_TEST(string_test_append_to_blank_1)
-   EOSIO_TEST(string_test_append_1)
-   EOSIO_TEST(string_test_append_null)
-   EOSIO_TEST(string_test_append_to_blank_2)
-   EOSIO_TEST(string_test_append_2)
-   EOSIO_TEST(string_test_append_3)
-   EOSIO_TEST(string_test_append_op_pl_1)
-   EOSIO_TEST(string_test_append_op_pl_2)
-   EOSIO_TEST(string_test_append_op_pl_3)
-   EOSIO_TEST(string_test_append_op_pl_4)
-   EOSIO_TEST(string_test_print)
-   EOSIO_TEST(string_test_less_than)
-   EOSIO_TEST(string_test_gt)
-   EOSIO_TEST(string_test_lt_or_eq)
-   EOSIO_TEST(string_test_gt_or_eq)
-   EOSIO_TEST(string_test_equal)
-   EOSIO_TEST(string_test_not_equal)
-   EOSIO_TEST(string_test_stream_io_1)
-   EOSIO_TEST(string_test_stream_io_2)
-   EOSIO_TEST(string_test_stream_io_3)
+   DCD_TEST(string_test_ins_null)
+   DCD_TEST(string_test_ins_to_blank)
+   DCD_TEST(string_test_ins_at_bgn_single)
+   DCD_TEST(string_test_ins_at_bgn_mul_1)
+   DCD_TEST(string_test_ins_at_bgn_mul_2)
+   DCD_TEST(string_test_ins_in_middle_1)
+   DCD_TEST(string_test_ins_in_middle_2)
+   DCD_TEST(string_test_ins_at_end)
+   DCD_TEST(string_test_ins_neg_index_1)
+   DCD_TEST(string_test_ins_op_pl_1)
+   DCD_TEST(string_test_ins_op_pl_2)
+   DCD_TEST(string_test_ins_op_pl_3)
+   DCD_TEST(string_test_ins_op_pl_4)
+   DCD_TEST(string_test_ins_op_pl_5)
+   DCD_TEST(string_test_ins_op_pl_6)
+   DCD_TEST(string_test_ins_op_pl_7)
+   DCD_TEST(string_test_ins_neg_index_2)
+   DCD_TEST(string_test_ins_capacity)
+   DCD_TEST(string_test_erase)
+   DCD_TEST(string_test_erase_at_zero)
+   DCD_TEST(string_test_erase_to_npos)
+   DCD_TEST(string_test_erase_1)
+   DCD_TEST(string_test_erase_2)
+   DCD_TEST(string_test_erase_3)
+   DCD_TEST(string_test_erase_4)
+   DCD_TEST(string_test_erase_5)
+   DCD_TEST(string_test_erase_6)
+   DCD_TEST(string_test_erase_7)
+   DCD_TEST(string_test_erase_8)
+   DCD_TEST(string_test_erase_8_len_0)
+   DCD_TEST(string_test_erase_neg_index_1)
+   DCD_TEST(string_test_erase_op_pl)
+   DCD_TEST(string_test_erase_at_0_op_pl)
+   DCD_TEST(string_test_erase_at_0_op_pl_npos)
+   DCD_TEST(string_test_erase_1_op_pl)
+   DCD_TEST(string_test_erase_2_op_pl)
+   DCD_TEST(string_test_erase_3_op_pl)
+   DCD_TEST(string_test_erase_4_op_pl)
+   DCD_TEST(string_test_erase_5_op_pl)
+   DCD_TEST(string_test_erase_6_op_pl)
+   DCD_TEST(string_test_erase_7_op_pl)
+   DCD_TEST(string_test_erase_8_op_pl)
+   DCD_TEST(string_test_erase_at_8_op_pl)
+   DCD_TEST(string_test_erase_neg_index_2)
+   DCD_TEST(string_test_append_to_blank_1)
+   DCD_TEST(string_test_append_1)
+   DCD_TEST(string_test_append_null)
+   DCD_TEST(string_test_append_to_blank_2)
+   DCD_TEST(string_test_append_2)
+   DCD_TEST(string_test_append_3)
+   DCD_TEST(string_test_append_op_pl_1)
+   DCD_TEST(string_test_append_op_pl_2)
+   DCD_TEST(string_test_append_op_pl_3)
+   DCD_TEST(string_test_append_op_pl_4)
+   DCD_TEST(string_test_print)
+   DCD_TEST(string_test_less_than)
+   DCD_TEST(string_test_gt)
+   DCD_TEST(string_test_lt_or_eq)
+   DCD_TEST(string_test_gt_or_eq)
+   DCD_TEST(string_test_equal)
+   DCD_TEST(string_test_not_equal)
+   DCD_TEST(string_test_stream_io_1)
+   DCD_TEST(string_test_stream_io_2)
+   DCD_TEST(string_test_stream_io_3)
 
    return has_failed();
 }

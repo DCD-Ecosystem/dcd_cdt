@@ -10,15 +10,15 @@ This guide provides instructions on how iterate and retrieve data from a multi-i
 
 See the following code reference:
 
-* The [`multi-index`](../../classeosio_1_1multi__index) class.
+* The [`multi-index`](../../classdcd_1_1multi__index) class.
 * The [`multi-index::find(...)`](../../group__multiindex#function-find) method.
 
 ## Before you begin
 
 Make sure you have the following prerequisites in place:
 
-* An EOSIO development environment, for details consult the [Get Started Guide](https://developers.eos.io/welcome/latest/getting-started-guide/index),
-* A multi-index `testab` table instance which stores `user` objects indexed by the primary key which is of type `eosio::name` and a secondary index for data member `secondary` of type `eosio::name` accessible through `by_secondary()` method. Consult the section [How to define a secondary index](./how-to-define-a-secondary-index) to learn how to set it up.
+* An DCD development environment, for details consult the [Get Started Guide](https://developers.dcd.io/welcome/latest/getting-started-guide/index),
+* A multi-index `testab` table instance which stores `user` objects indexed by the primary key which is of type `dcd::name` and a secondary index for data member `secondary` of type `dcd::name` accessible through `by_secondary()` method. Consult the section [How to define a secondary index](./how-to-define-a-secondary-index) to learn how to set it up.
 
 ## Procedure
 
@@ -29,13 +29,13 @@ Complete the following steps to iterate, retrieve and print data from the `testt
 Add an action to the definition of the multi-index table which takes as parameter an account name. This action will retrieve the user object stored in the multi-index based on the passed in account name parameter. The action will use the secondary index.
 
 ```cpp
-  [[eosio::action]] void bysec( name secid );
+  [[dcd::action]] void bysec( name secid );
 ```
 
 Optionally, for ease of use add the action wrapper definition as well.
 
 ```diff
-  [[eosio::action]] void bysec( name secid );
+  [[dcd::action]] void bysec( name secid );
 
   +using bysec_action = action_wrapper<"bysec"_n, &multi_index_example::bysec>;
 ```
@@ -46,13 +46,13 @@ Search for the `user` name in the multi-index table using the secondary index. I
 
 ```cpp
 // iterates the multi-index table rows using the secondary index and prints the row's values
-[[eosio::action]] void multi_index_example::bysec( name secid ) {
+[[dcd::action]] void multi_index_example::bysec( name secid ) {
   // access the secondary index
   auto idx = testtab.get_index<"secid"_n>();
   // iterate through secondary index
   for ( auto itr = idx.begin(); itr != idx.end(); itr++ ) {
     // print each row's values
-    eosio::print_f("Test Table : {%, %, %}\n", itr->test_primary, itr->secondary, itr->datum);
+    dcd::print_f("Test Table : {%, %, %}\n", itr->test_primary, itr->secondary, itr->datum);
   }
 }
 ```
@@ -64,11 +64,11 @@ The full definition and implementation files for the contract should look like t
 __multi_index_example.hpp__
 
 ```cpp
-#include <eosio/eosio.hpp>
-using namespace eosio;
+#include <dcd/dcd.hpp>
+using namespace dcd;
 
 // multi-index example contract class
-class [[eosio::contract]] multi_index_example : public contract {
+class [[dcd::contract]] multi_index_example : public contract {
    public:
       using contract::contract;
 
@@ -82,7 +82,7 @@ class [[eosio::contract]] multi_index_example : public contract {
 
       // the row structure of the multi-index table, that is, each row of the table
       // will contain an instance of this type of structure
-      struct [[eosio::table]] test_table {
+      struct [[dcd::table]] test_table {
         // this data member stores a name for each row of the multi-index table
         name test_primary;
         name secondary;
@@ -96,14 +96,14 @@ class [[eosio::contract]] multi_index_example : public contract {
       // the multi-index type definition, for ease of use define a type alias `test_table_t`, 
       // based on the multi_index template type, parametarized with a random name, the 
       // test_table data structure, and the secondary index
-      typedef eosio::multi_index<"testtaba"_n, test_table, eosio::indexed_by<"secid"_n, eosio::const_mem_fun<test_table, uint64_t, &test_table::by_secondary>>> test_table_t;
+      typedef dcd::multi_index<"testtaba"_n, test_table, dcd::indexed_by<"secid"_n, dcd::const_mem_fun<test_table, uint64_t, &test_table::by_secondary>>> test_table_t;
 
       // the multi-index table instance declared as a data member of type test_table_t
       test_table_t testtab;
 
-      [[eosio::action]] void set( name user );
-      [[eosio::action]] void print( name user );
-      [[eosio::action]] void bysec( name secid );
+      [[dcd::action]] void set( name user );
+      [[dcd::action]] void print( name user );
+      [[dcd::action]] void bysec( name secid );
 
       using set_action = action_wrapper<"set"_n, &multi_index_example::set>;
       using print_action = action_wrapper<"print"_n, &multi_index_example::print>;
@@ -116,7 +116,7 @@ __multi_index_example.cpp__
 ```cpp
 #include <multi_index_example.hpp>
 
-[[eosio::action]] void multi_index_example::set( name user ) {
+[[dcd::action]] void multi_index_example::set( name user ) {
   // check if the user already exists
   auto itr = testtab.find(user.value);
 
@@ -130,7 +130,7 @@ __multi_index_example.cpp__
   }
 }
 
-[[eosio::action]] void multi_index_example::print( name user ) {
+[[dcd::action]] void multi_index_example::print( name user ) {
   // searches for the row that corresponds to the user parameter
   auto itr = testtab.find(user.value);
   
@@ -138,24 +138,24 @@ __multi_index_example.cpp__
   check( itr != testtab.end(), "user does not exist in table" );
 
   // prints the test_primary and datum fields stored for user parameter
-  eosio::print_f("Test Table : {%, %}\n", itr->test_primary, itr->datum);
+  dcd::print_f("Test Table : {%, %}\n", itr->test_primary, itr->datum);
 }
 
 // iterates the multi-index table rows using the secondary index and prints the row's values
-[[eosio::action]] void multi_index_example::bysec( name secid ) {
+[[dcd::action]] void multi_index_example::bysec( name secid ) {
   // access the secondary index
   auto idx = testtab.get_index<"secid"_n>();
 
   // iterate through secondary index
   for ( auto itr = idx.begin(); itr != idx.end(); itr++ ) {
     // print each row's values
-    eosio::print_f("Test Table : {%, %, %}\n", itr->test_primary, itr->secondary, itr->datum);
+    dcd::print_f("Test Table : {%, %, %}\n", itr->test_primary, itr->secondary, itr->datum);
   }
 }
 ```
 
 [[info | Full example location]]
-| A full example project demonstrating the instantiation and usage of multi-index table can be found [here](https://github.com/EOSIO/eosio.cdt/tree/master/examples/multi_index_example).
+| A full example project demonstrating the instantiation and usage of multi-index table can be found [here](https://github.com/DCD/dcd.cdt/tree/master/examples/multi_index_example).
 
 ## Summary
 
